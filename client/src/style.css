@@ -1,0 +1,1274 @@
+:root {
+    /* ===== 色彩系統 (需求 8.3) ===== */
+    --bg: #0c1511;
+    --panel: #18221c;
+    --panel-2: #1e2a23;
+    --panel-3: #141d18;
+    --accent: #22c55e;
+    --accent-2: #10b981;
+    --accent-hover: #16a34a;
+    --accent-active: #15803d;
+    --accent-glow: rgba(34, 197, 94, 0.2);
+    --accent-light: rgba(34, 197, 94, 0.12);
+    --accent-border: rgba(34, 197, 94, 0.25);
+    --text: #e7f3ec;
+    --muted: #a4b6aa;
+    --danger: #f87171;
+    --danger-hover: #ef4444;
+    --danger-active: #dc2626;
+    --card: #1a241e;
+    --border: #223026;
+    --border-hover: #2b3d30;
+    
+    /* ===== 圓角系統 (需求 8.1) ===== */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 14px;
+    --radius-xl: 18px;
+    --radius-2xl: 20px;
+    --radius-full: 999px;
+    
+    /* ===== 間距系統 (需求 8.2) ===== */
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 20px;
+    --space-6: 24px;
+    --space-7: 28px;
+    --space-8: 32px;
+    
+    /* ===== 過渡動畫 ===== */
+    --transition-fast: 0.15s ease;
+    --transition-normal: 0.2s ease;
+    --transition-slow: 0.3s ease;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+    background: radial-gradient(800px 600px at 20% -10%, #1e3a2a 0%, #0c1511 60%);
+    color: var(--text);
+}
+
+.p-component {
+    font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+.p-inputtext,
+.p-password input,
+.p-textarea,
+.p-calendar input {
+    background: #111b16;
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: var(--radius-md);
+    padding: var(--space-3) var(--space-3);
+    transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.p-inputtext:focus,
+.p-password input:focus,
+.p-textarea:focus,
+.p-calendar input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px var(--accent-light);
+}
+
+.p-inputtext:hover:not(:focus),
+.p-password input:hover:not(:focus),
+.p-textarea:hover:not(:focus),
+.p-calendar input:hover:not(:focus) {
+    border-color: var(--border-hover);
+}
+
+.p-inputtext::placeholder,
+.p-textarea::placeholder {
+    color: #7d9185;
+}
+
+.p-button {
+    border-radius: var(--radius-md);
+    border: 1px solid transparent;
+    background: var(--accent);
+    color: #03130c;
+    font-weight: 600;
+    box-shadow: 0 10px 18px var(--accent-glow);
+    transition: background var(--transition-normal), transform var(--transition-fast), box-shadow var(--transition-normal);
+}
+
+.p-button:enabled:hover {
+    background: var(--accent-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 12px 20px var(--accent-glow);
+}
+
+.p-button:enabled:active {
+    background: var(--accent-active);
+    transform: translateY(0);
+    box-shadow: 0 8px 16px var(--accent-glow);
+}
+
+.p-button.p-button-secondary,
+.p-button.p-button-help,
+.p-button.p-button-info {
+    background: #243428;
+    color: var(--text);
+    border: 1px solid var(--border-hover);
+    box-shadow: none;
+}
+
+.p-button.p-button-secondary:enabled:hover,
+.p-button.p-button-help:enabled:hover,
+.p-button.p-button-info:enabled:hover {
+    background: #2b3d30;
+    border-color: #3d5244;
+}
+
+.p-button.p-button-secondary:enabled:active,
+.p-button.p-button-help:enabled:active,
+.p-button.p-button-info:enabled:active {
+    background: #223026;
+}
+
+.p-button.p-button-danger {
+    background: var(--danger);
+    border-color: var(--danger);
+    color: #fff;
+    box-shadow: none;
+}
+
+.p-button.p-button-danger:enabled:hover {
+    background: var(--danger-hover);
+    border-color: var(--danger-hover);
+}
+
+.p-button.p-button-danger:enabled:active {
+    background: var(--danger-active);
+    border-color: var(--danger-active);
+}
+
+.p-button.p-button-text {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    color: var(--accent);
+}
+
+.p-button.p-button-text:enabled:hover {
+    background: var(--accent-light);
+    transform: none;
+}
+
+.p-button.p-button-text:enabled:active {
+    background: rgba(34, 197, 94, 0.2);
+}
+
+.p-calendar .p-button {
+    box-shadow: none;
+}
+
+.p-card {
+    background: var(--panel-2);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--border);
+    color: var(--text);
+    transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.p-card:hover {
+    border-color: var(--border-hover);
+}
+
+.p-password .p-password-icon {
+    color: var(--muted);
+}
+
+.p-checkbox .p-checkbox-box {
+    background: #111b16;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    transition: background var(--transition-normal), border-color var(--transition-normal);
+}
+
+.p-checkbox .p-checkbox-box:hover {
+    border-color: var(--border-hover);
+}
+
+.p-checkbox .p-checkbox-box.p-highlight {
+    background: var(--accent);
+    border-color: var(--accent);
+}
+
+.p-checkbox .p-checkbox-box.p-highlight:hover {
+    background: var(--accent-hover);
+    border-color: var(--accent-hover);
+}
+
+.app-shell {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    min-height: 100vh;
+}
+
+/* 桌面版 (>1100px) - 側邊欄固定顯示 */
+@media (min-width: 1101px) {
+    .app-shell {
+        grid-template-columns: 1fr;
+    }
+    
+    .sidebar {
+        display: flex;
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 260px;
+        z-index: 100;
+    }
+    
+    .main {
+        margin-left: 260px;
+        width: calc(100% - 260px);
+    }
+    
+    .bottom-nav {
+        display: none !important;
+    }
+}
+
+.sidebar {
+    background: var(--panel);
+    padding: var(--space-7) var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    border-right: 1px solid var(--border);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--accent);
+    margin-bottom: var(--space-3);
+}
+
+.status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: var(--radius-full);
+    background: var(--accent);
+    box-shadow: 0 0 12px var(--accent);
+}
+
+.menu-button {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-3);
+    border-radius: var(--radius-lg);
+    color: var(--muted);
+    cursor: pointer;
+    transition: background var(--transition-normal), color var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.menu-button.active,
+.menu-button:hover {
+    background: #223126;
+    color: var(--text);
+    box-shadow: 0 0 0 1px var(--accent-glow);
+}
+
+.menu-button:active {
+    background: #1a2620;
+}
+
+.sidebar-logout {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    width: 100%;
+    padding: var(--space-3) var(--space-3);
+    border-radius: var(--radius-lg);
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--muted);
+    font-size: 14px;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+}
+
+.sidebar-logout:hover {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: rgba(239, 68, 68, 0.3);
+    color: #f87171;
+}
+
+.sidebar-logout:active {
+    background: rgba(239, 68, 68, 0.15);
+}
+
+.sidebar-logout i {
+    font-size: 16px;
+}
+
+.main {
+    padding: var(--space-7) var(--space-8) 120px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-5);
+    margin-bottom: var(--space-6);
+}
+
+.greeting {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.username {
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.header-date {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.header-logout {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-md);
+    background: var(--accent-light);
+    border: 1px solid var(--accent-border);
+    color: var(--accent);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+}
+
+.header-logout:hover {
+    background: rgba(34, 197, 94, 0.2);
+    border-color: rgba(34, 197, 94, 0.4);
+}
+
+.header-logout:active {
+    background: rgba(34, 197, 94, 0.25);
+}
+
+.header-logout i {
+    font-size: 14px;
+}
+
+.icon-button.p-button {
+    width: 42px;
+    height: 42px;
+    border-radius: var(--radius-full);
+    background: #1b251f;
+    border: 1px solid var(--border);
+    transition: background var(--transition-normal), border-color var(--transition-normal);
+}
+
+.icon-button.p-button:hover {
+    background: #223026;
+    border-color: var(--border-hover);
+}
+
+.section-head {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin: var(--space-5) 0 var(--space-3);
+    font-weight: 600;
+    color: #cfe4d6;
+}
+
+.section-head.row-between {
+    justify-content: space-between;
+}
+
+.hero-card {
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.18), rgba(15, 23, 42, 0.1));
+    border: 1px solid rgba(34, 197, 94, 0.35);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-5);
+    position: relative;
+    overflow: hidden;
+    transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.hero-card:hover {
+    border-color: rgba(34, 197, 94, 0.5);
+    box-shadow: 0 8px 32px rgba(34, 197, 94, 0.15);
+}
+
+.hero-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 85% 30%, rgba(34, 197, 94, 0.25), transparent 60%);
+    pointer-events: none;
+}
+
+.hero-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-full);
+    background: rgba(34, 197, 94, 0.2);
+    color: #b8f4d0;
+    font-size: 12px;
+}
+
+.hero-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-top: var(--space-3);
+}
+
+.hero-sub {
+    color: var(--muted);
+    margin-top: 6px;
+}
+
+.hero-metric {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-3);
+    margin-top: var(--space-3);
+}
+
+.hero-percent {
+    font-size: 36px;
+    font-weight: 700;
+    color: #6ee7b7;
+}
+
+.hero-label {
+    color: var(--muted);
+}
+
+.hero-action.p-button {
+    margin-top: var(--space-3);
+    background: var(--accent);
+    border: none;
+    box-shadow: 0 10px 20px rgba(34, 197, 94, 0.3);
+}
+
+.panel {
+    background: var(--panel-2);
+    border-radius: var(--radius-xl);
+    padding: var(--space-4);
+    border: 1px solid var(--border);
+    transition: border-color var(--transition-normal);
+}
+
+.panel:hover {
+    border-color: var(--border-hover);
+}
+
+.ai-panel {
+    background: #151f19;
+}
+
+.ai-quote {
+    font-style: italic;
+    color: #cfe4d6;
+    line-height: 1.6;
+}
+
+.ai-author {
+    margin-top: var(--space-3);
+    text-align: center;
+    font-size: 12px;
+    letter-spacing: 1px;
+    color: #7bb99b;
+}
+
+.action-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: var(--space-3);
+}
+
+.action-card {
+    background: var(--panel-3);
+    border-radius: var(--radius-xl);
+    padding: var(--space-3);
+    border: 1px solid #1f2a23;
+    color: var(--text);
+    text-align: left;
+    cursor: pointer;
+    transition: background var(--transition-normal), border-color var(--transition-normal), transform var(--transition-fast);
+}
+
+.action-card:hover {
+    background: #1a241e;
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+}
+
+.action-card:active {
+    transform: translateY(0);
+    background: #151d18;
+}
+
+.action-card i {
+    font-size: 20px;
+    margin-bottom: 6px;
+    color: var(--accent);
+}
+
+.action-card small {
+    color: var(--muted);
+}
+
+.link-button {
+    background: none;
+    border: none;
+    color: var(--accent);
+    cursor: pointer;
+    font-size: 13px;
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-sm);
+    transition: background var(--transition-normal), color var(--transition-normal);
+}
+
+.link-button:hover {
+    background: var(--accent-light);
+    color: var(--accent-hover);
+}
+
+.link-button:active {
+    background: rgba(34, 197, 94, 0.2);
+}
+
+.recent-card {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-3);
+    border-radius: var(--radius-lg);
+    background: #141d18;
+    border: 1px solid #1f2a23;
+    margin-bottom: var(--space-3);
+    transition: background var(--transition-normal), border-color var(--transition-normal);
+}
+
+.recent-card:hover {
+    background: #1a241e;
+    border-color: var(--border-hover);
+}
+
+.recent-icon {
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    border-radius: var(--radius-md);
+    background: rgba(34, 197, 94, 0.15);
+    color: var(--accent);
+}
+
+.recent-title {
+    font-weight: 600;
+}
+
+.recent-sub {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.recent-time {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.focus-panel {
+    text-align: center;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.tomato-clock {
+    width: 240px;
+    height: 240px;
+    position: relative;
+    margin: 0 auto 24px;
+}
+
+.tomato-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    filter: drop-shadow(0 18px 24px rgba(0,0,0,0.35));
+}
+
+.tomato-shadow {
+    fill: rgba(0,0,0,0.25);
+}
+
+.tomato-body {
+    fill: url(#tomatoBody);
+}
+
+.tomato-deep {
+    fill: url(#tomatoDeep);
+}
+
+.tomato-leaf {
+    fill: url(#leafGrad);
+}
+
+.tomato-stem {
+    fill: none;
+    stroke: #15803d;
+    stroke-width: 10;
+    stroke-linecap: round;
+}
+
+.tomato-top {
+    fill: rgba(0,0,0,0.18);
+}
+
+.tomato-highlight {
+    fill: rgba(255,255,255,0.22);
+}
+
+.tomato-highlight-2 {
+    fill: rgba(255,255,255,0.12);
+}
+
+.timer-text {
+    font-size: 48px;
+    font-weight: 800;
+    color: white;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.focus-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.todo-inputs {
+    display: grid;
+    gap: var(--space-3);
+    grid-template-columns: 1fr 220px 120px;
+}
+
+.todo-filter {
+    display: flex;
+    gap: var(--space-3);
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.todo-item,
+.diary-item,
+.meal-item {
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
+    background: #141d18;
+    border: 1px solid #1f2a23;
+    margin-bottom: var(--space-3);
+    transition: background var(--transition-normal), border-color var(--transition-normal);
+}
+
+.todo-item:hover,
+.diary-item:hover,
+.meal-item:hover {
+    background: #1a241e;
+    border-color: var(--border-hover);
+}
+
+.todo-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.todo-row .title {
+    flex: 1;
+}
+
+.todo-row.completed .title {
+    text-decoration: line-through;
+    color: #69748a;
+}
+
+.todo-date {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: var(--space-2);
+}
+
+.ai-box {
+    background: rgba(34, 197, 94, 0.08);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    border-radius: var(--radius-md);
+    padding: var(--space-3) var(--space-4);
+    color: #bff2d5;
+    line-height: 1.6;
+}
+
+.ai-reply-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.ai-reply-label::before {
+    content: "🤖";
+    font-size: 14px;
+}
+
+.muted { color: var(--muted); }
+
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-6) var(--space-4);
+    background: radial-gradient(ellipse at 50% 0%, rgba(34, 197, 94, 0.15) 0%, transparent 50%);
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 400px;
+    background: var(--panel-2);
+    border-radius: var(--radius-2xl);
+    border: 1px solid rgba(34, 197, 94, 0.2);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 40px rgba(34, 197, 94, 0.1);
+    transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.auth-card:hover {
+    border-color: rgba(34, 197, 94, 0.35);
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45), 0 0 50px rgba(34, 197, 94, 0.15);
+}
+
+.auth-card .p-card-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--accent);
+    padding-top: var(--space-2);
+}
+
+.auth-card .p-card-content {
+    padding: var(--space-2) var(--space-6) var(--space-6);
+}
+
+.auth-card .p-inputtext,
+.auth-card .p-password input {
+    height: 48px;
+    font-size: 16px;
+}
+
+.auth-card .p-button {
+    height: 48px;
+    font-size: 16px;
+}
+
+.auth-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: var(--space-6);
+}
+
+.auth-logo-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: var(--radius-2xl);
+    background: linear-gradient(135deg, var(--accent), #15803d);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    color: white;
+    margin-bottom: var(--space-3);
+    box-shadow: 0 8px 24px rgba(34, 197, 94, 0.3);
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.auth-logo-icon:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 32px rgba(34, 197, 94, 0.4);
+}
+
+.auth-subtitle {
+    color: var(--muted);
+    font-size: 14px;
+    text-align: center;
+}
+
+@media (max-width: 480px) {
+    .auth-container {
+        padding: 16px;
+    }
+    
+    .auth-card {
+        border-radius: 20px;
+    }
+    
+    .auth-card .p-card-content {
+        padding: 8px 16px 20px;
+    }
+    
+    .auth-card .p-card-title {
+        font-size: 22px;
+    }
+    
+    /* 超小螢幕番茄鐘優化 */
+    .tomato-clock {
+        width: 180px;
+        height: 180px;
+    }
+    
+    .timer-text {
+        font-size: 36px;
+    }
+    
+    .focus-actions {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .focus-actions .p-button {
+        width: 100%;
+    }
+}
+
+.meal-upload {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+}
+
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #101812;
+    border-top: 1px solid #1f2a23;
+    display: none;
+    grid-template-columns: repeat(5, 1fr);
+    padding: var(--space-3) var(--space-2) var(--space-3);
+    /* 底部安全區域優化 - 避開手機底部安全區域 (需求 12.3) */
+    padding-bottom: calc(var(--space-3) + env(safe-area-inset-bottom, 0px));
+    padding-left: calc(var(--space-2) + env(safe-area-inset-left, 0px));
+    padding-right: calc(var(--space-2) + env(safe-area-inset-right, 0px));
+    gap: 6px;
+    z-index: 100;
+}
+
+.bottom-item {
+    background: none;
+    border: none;
+    color: var(--muted);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-1);
+    font-size: 11px;
+    cursor: pointer;
+    padding: var(--space-2) var(--space-1);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-normal);
+    min-height: 44px;
+}
+
+.bottom-item.active {
+    color: var(--accent);
+    background: rgba(34, 197, 94, 0.1);
+}
+
+.bottom-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.bottom-item:active {
+    background: rgba(255, 255, 255, 0.08);
+    transform: scale(0.95);
+}
+
+.bottom-item i {
+    font-size: 20px;
+}
+
+.bottom-item span {
+    font-size: 11px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+@media (max-width: 1100px) {
+    .app-shell {
+        grid-template-columns: 1fr;
+    }
+    .sidebar {
+        display: none !important;
+    }
+    .bottom-nav {
+        display: grid;
+    }
+    .main {
+        padding: var(--space-6) var(--space-5) 120px;
+        /* 底部安全區域優化 - 確保內容不被底部導航遮擋 */
+        padding-bottom: calc(120px + env(safe-area-inset-bottom, 0px));
+        margin-left: 0;
+    }
+}
+
+/* 只在行動版顯示的元素 */
+.mobile-only {
+    display: none;
+}
+
+@media (max-width: 1100px) {
+    .mobile-only {
+        display: flex;
+    }
+}
+
+@media (max-width: 720px) {
+    .todo-inputs {
+        grid-template-columns: 1fr;
+    }
+    
+    /* 快速操作卡片 2 欄顯示 */
+    .action-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-3);
+    }
+    
+    /* 待辦清單篩選區垂直堆疊 */
+    .todo-filter {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .todo-filter .p-calendar,
+    .todo-filter .p-button {
+        width: 100%;
+    }
+    
+    /* 優化小螢幕內邊距 */
+    .main {
+        padding: var(--space-4) var(--space-4) 120px;
+        /* 底部安全區域優化 */
+        padding-bottom: calc(120px + env(safe-area-inset-bottom, 0px));
+    }
+    
+    .panel {
+        padding: var(--space-3);
+        border-radius: var(--radius-lg);
+    }
+    
+    .hero-card {
+        padding: var(--space-4);
+        border-radius: var(--radius-lg);
+    }
+    
+    /* 確保字體大小可讀（最小 14px） */
+    .greeting,
+    .header-date,
+    .muted,
+    .recent-sub,
+    .recent-time,
+    .todo-date,
+    .ai-author {
+        font-size: 14px;
+    }
+    
+    .bottom-item span {
+        font-size: 10px;
+    }
+    
+    .action-card {
+        padding: var(--space-3);
+        border-radius: var(--radius-lg);
+    }
+    
+    .action-card small {
+        font-size: 12px;
+    }
+    
+    .section-head {
+        font-size: 15px;
+    }
+    
+    /* ===== 番茄鐘手機優化 (需求 12.4) ===== */
+    
+    /* 番茄鐘容器在手機上的優化 */
+    .focus-panel {
+        padding: var(--space-5) var(--space-4);
+    }
+    
+    /* 番茄鐘標題在手機上的優化 */
+    .focus-panel .section-title {
+        font-size: 20px;
+        margin-bottom: var(--space-4);
+    }
+    
+    /* 番茄鐘計時器在手機上保持清晰可見 */
+    .tomato-clock {
+        width: 200px;
+        height: 200px;
+        margin: 0 auto var(--space-5);
+    }
+    
+    /* 計時器文字在手機上的優化 - 確保清晰可見 */
+    .timer-text {
+        font-size: 42px;
+        font-weight: 800;
+    }
+    
+    /* 番茄鐘控制按鈕在手機上的優化 */
+    .focus-actions {
+        gap: var(--space-3);
+    }
+    
+    .focus-actions .p-button {
+        min-width: 90px;
+        padding: var(--space-3) var(--space-4);
+        font-size: 14px;
+    }
+}
+
+/* 平板版內邊距優化 (720px - 1100px) */
+@media (min-width: 721px) and (max-width: 1100px) {
+    .main {
+        padding: var(--space-6) var(--space-6) 120px;
+    }
+    
+    .action-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* 大螢幕優化 (>1100px) */
+@media (min-width: 1101px) {
+    .action-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* ===== 行動裝置觸控優化 ===== */
+
+/* 觸控目標尺寸優化 - 按鈕最小高度 44px (需求 12.1) */
+.p-button {
+    min-height: 44px;
+}
+
+/* 觸控目標尺寸優化 - 輸入框最小高度 44px (需求 12.2) */
+.p-inputtext,
+.p-password input,
+.p-textarea,
+.p-calendar input {
+    min-height: 44px;
+}
+
+/* 選單按鈕觸控優化 */
+.menu-button {
+    min-height: 44px;
+}
+
+/* 底部導航項目觸控優化 */
+.bottom-item {
+    min-height: 44px;
+    min-width: 44px;
+}
+
+/* 動作卡片觸控優化 */
+.action-card {
+    min-height: 44px;
+}
+
+/* 連結按鈕觸控優化 */
+.link-button {
+    min-height: 44px;
+    padding: 10px 12px;
+}
+
+/* 側邊欄登出按鈕觸控優化 */
+.sidebar-logout {
+    min-height: 44px;
+}
+
+/* 頁首登出按鈕觸控優化 */
+.header-logout {
+    min-height: 44px;
+}
+
+/* Checkbox 觸控區域優化 */
+.todo-row input[type="checkbox"] {
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    cursor: pointer;
+}
+
+/* 行動裝置專屬觸控優化 */
+@media (max-width: 1100px) {
+    /* 確保所有按鈕在行動裝置上有足夠的觸控區域 */
+    .p-button {
+        min-height: 44px;
+        padding: 12px 16px;
+    }
+    
+    /* 輸入框在行動裝置上的觸控優化 */
+    .p-inputtext,
+    .p-password input,
+    .p-textarea,
+    .p-calendar input {
+        min-height: 44px;
+        padding: 12px 14px;
+    }
+    
+    /* 圖示按鈕觸控優化 */
+    .icon-button.p-button {
+        min-width: 44px;
+        min-height: 44px;
+    }
+    
+    /* 刪除按鈕觸控優化 */
+    .p-button.p-button-text {
+        min-width: 44px;
+        min-height: 44px;
+    }
+}
+
+
+/* ConfirmDialog 自訂樣式 */
+.p-dialog {
+    background: var(--panel-2);
+    border: 1px solid var(--accent-border);
+    border-radius: var(--radius-xl);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(34, 197, 94, 0.1);
+}
+
+.p-dialog .p-dialog-header {
+    background: transparent;
+    border-bottom: 1px solid var(--border);
+    padding: var(--space-4) var(--space-5);
+    color: var(--text);
+}
+
+.p-dialog .p-dialog-header .p-dialog-title {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.p-dialog .p-dialog-header .p-dialog-header-icon {
+    color: var(--muted);
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-sm);
+    transition: background var(--transition-normal), color var(--transition-normal);
+}
+
+.p-dialog .p-dialog-header .p-dialog-header-icon:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text);
+}
+
+.p-dialog .p-dialog-content {
+    background: transparent;
+    padding: var(--space-5);
+    color: var(--text);
+}
+
+.p-dialog .p-dialog-footer {
+    background: transparent;
+    border-top: 1px solid var(--border);
+    padding: var(--space-4) var(--space-5);
+    gap: var(--space-3);
+}
+
+.p-confirm-dialog .p-confirm-dialog-icon {
+    color: #fbbf24;
+    font-size: 24px;
+}
+
+.p-confirm-dialog .p-confirm-dialog-message {
+    color: var(--text);
+    margin-left: var(--space-3);
+}
+
+/* 確認按鈕 - 使用主色調綠色 */
+.p-dialog .p-dialog-footer .p-button {
+    min-width: 80px;
+}
+
+.p-dialog .p-dialog-footer .p-confirm-dialog-accept {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #03130c;
+}
+
+.p-dialog .p-dialog-footer .p-confirm-dialog-accept:hover {
+    background: var(--accent-hover);
+    border-color: var(--accent-hover);
+}
+
+.p-dialog .p-dialog-footer .p-confirm-dialog-accept:active {
+    background: var(--accent-active);
+    border-color: var(--accent-active);
+}
+
+/* 取消按鈕 - 次要樣式 */
+.p-dialog .p-dialog-footer .p-confirm-dialog-reject {
+    background: transparent;
+    border: 1px solid var(--border-hover);
+    color: var(--muted);
+}
+
+.p-dialog .p-dialog-footer .p-confirm-dialog-reject:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: #3d5244;
+    color: var(--text);
+}
+
+.p-dialog .p-dialog-footer .p-confirm-dialog-reject:active {
+    background: rgba(255, 255, 255, 0.08);
+}
