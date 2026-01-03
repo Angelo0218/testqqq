@@ -18,20 +18,21 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ error: '密碼至少需要 6 個字元' });
     }
 
-    const existing = db.prepare('SELECT id FROM users WHERE username = ?').get(username);
+    const existing = await db.get('SELECT id FROM users WHERE username = $1', [username]);
     if (existing) {
       return res.status(409).json({ error: '此帳號已被使用' });
     }
 
     const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
     
-    const result = db.prepare(
-      'INSERT INTO users (username, password) VALUES (?, ?)'
-    ).run(username, hashedPassword);
+    const result = await db.run(
+      'INSERT INTO users (username, password) VALUES ($1, $2) RETURNING id',
+      [username, hashedPassword]
+    );
 
     res.status(201).json({ 
       message: '註冊成功',
-      userId: result.lastInsertRowid 
+      userId: result.rows[0].id 
     });
   } catch (error) {
     console.error('Register error:', error);
@@ -44,7 +45,7 @@ router.post('/login', async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    const user = db.prepare('SELECT * FROM users WHERE username = ?').get(username);
+    const user = await db.get('SELECT * FROM users WHERE username = $1', [username]);
     if (!user) {
       return res.status(401).json({ error: '帳號或密碼錯誤' });
     }
@@ -58,13 +59,16 @@ router.post('/login', async (req, res) => {
     const today = new Date().toISOString().split('T')[0];
     let newStreak = user.streak || 0;
     
-    if (user.last_login !== today) {
+    const lastLogin = user.last_login ? new Date(user.last_login).toISOString().split('T')[0] : null;
+    
+    if (lastLogin !== today) {
       const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
-      newStreak = user.last_login === yesterday ? newStreak + 1 : 1;
+      newStreak = lastLogin === yesterday ? newStreak + 1 : 1;
       
-      db.prepare(
-        "UPDATE users SET streak = ?, last_login = ?, updated_at = datetime('now') WHERE id = ?"
-      ).run(newStreak, today, user.id);
+      await db.run(
+        'UPDATE users SET streak = $1, last_login = $2, updated_at = CURRENT_TIMESTAMP WHERE id = $3',
+        [newStreak, today, user.id]
+      );
     }
 
     req.session.user = { id: user.id, username: user.username };
@@ -86,14 +90,15 @@ router.post('/logout', (req, res) => {
 });
 
 // Get current user
-router.get('/me', (req, res) => {
+router.get('/me', async (req, res) => {
   if (!req.session?.user) {
     return res.json({ authenticated: false });
   }
   
-  const user = db.prepare(
-    'SELECT username, focus_time, streak FROM users WHERE id = ?'
-  ).get(req.session.user.id);
+  const user = await db.get(
+    'SELECT username, focus_time, streak FROM users WHERE id = $1',
+    [req.session.user.id]
+  );
   
   res.json({ 
     authenticated: true,

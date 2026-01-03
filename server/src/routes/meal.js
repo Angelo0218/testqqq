@@ -5,21 +5,21 @@ import { analyzeMealImage } from '../services/ai.js';
 const router = Router();
 
 // Get all meals for user
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
   const userId = req.session.user.id;
   const { date } = req.query;
   
-  let query = 'SELECT * FROM meals WHERE user_id = ?';
+  let query = 'SELECT * FROM meals WHERE user_id = $1';
   const params = [userId];
   
   if (date) {
-    query += ' AND date = ?';
+    query += ' AND date = $2';
     params.push(date);
   }
   
   query += ' ORDER BY created_at DESC';
   
-  const meals = db.prepare(query).all(...params);
+  const meals = await db.all(query, params);
   
   res.json(meals.map(m => ({
     id: m.id,
@@ -47,12 +47,13 @@ router.post('/', async (req, res) => {
   const date = new Date().toISOString().split('T')[0];
   const nutrients = await analyzeMealImage(image);
   
-  const result = db.prepare(
-    'INSERT INTO meals (user_id, calories, protein, fat, carb, summary, date) VALUES (?, ?, ?, ?, ?, ?, ?)'
-  ).run(userId, nutrients.calories, nutrients.protein, nutrients.fat, nutrients.carb, nutrients.summary, date);
+  const result = await db.run(
+    'INSERT INTO meals (user_id, calories, protein, fat, carb, summary, date) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id',
+    [userId, nutrients.calories, nutrients.protein, nutrients.fat, nutrients.carb, nutrients.summary, date]
+  );
   
   res.status(201).json({ 
-    id: result.lastInsertRowid,
+    id: result.rows[0].id,
     nutrients,
     summary: nutrients.summary,
     date
@@ -60,13 +61,13 @@ router.post('/', async (req, res) => {
 });
 
 // Delete meal
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
   const userId = req.session.user.id;
   const { id } = req.params;
   
-  const result = db.prepare('DELETE FROM meals WHERE id = ? AND user_id = ?').run(id, userId);
+  const result = await db.run('DELETE FROM meals WHERE id = $1 AND user_id = $2', [id, userId]);
   
-  if (result.changes === 0) {
+  if (result.rowCount === 0) {
     return res.status(404).json({ error: '找不到此飲食紀錄' });
   }
   

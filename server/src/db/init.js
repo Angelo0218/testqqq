@@ -1,21 +1,27 @@
-import { mkdirSync, existsSync } from 'fs';
-import { dirname, join } from 'path';
+import 'dotenv/config';
+import pg from 'pg';
+import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const dataDir = join(__dirname, '../../data');
+const { Pool } = pg;
 
-// Create data directory if not exists
-if (!existsSync(dataDir)) {
-  mkdirSync(dataDir, { recursive: true });
-  console.log('✅ Created data directory');
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
+});
+
+async function init() {
+  try {
+    const schema = readFileSync(join(__dirname, 'schema.sql'), 'utf-8');
+    await pool.query(schema);
+    console.log('✅ Database initialized successfully');
+    process.exit(0);
+  } catch (error) {
+    console.error('❌ Database initialization failed:', error);
+    process.exit(1);
+  }
 }
 
-// Import db to trigger schema initialization
-import('./index.js').then(() => {
-  console.log('✅ Database initialized successfully');
-  process.exit(0);
-}).catch(err => {
-  console.error('❌ Database initialization failed:', err);
-  process.exit(1);
-});
+init();

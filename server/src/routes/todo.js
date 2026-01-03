@@ -4,33 +4,33 @@ import db from '../db/index.js';
 const router = Router();
 
 // Get all todos for user
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
   const userId = req.session.user.id;
   const { date } = req.query;
   
-  let query = 'SELECT * FROM todos WHERE user_id = ?';
+  let query = 'SELECT * FROM todos WHERE user_id = $1';
   const params = [userId];
   
   if (date) {
-    query += ' AND date = ?';
+    query += ' AND date = $2';
     params.push(date);
   }
   
   query += ' ORDER BY date DESC, created_at DESC';
   
-  const todos = db.prepare(query).all(...params);
+  const todos = await db.all(query, params);
   
   res.json(todos.map(t => ({
     id: t.id,
     task: t.task,
-    completed: Boolean(t.completed),
+    completed: t.completed,
     date: t.date,
     createdAt: t.created_at
   })));
 });
 
 // Create todo
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   const userId = req.session.user.id;
   const { task, date } = req.body;
   
@@ -40,12 +40,13 @@ router.post('/', (req, res) => {
   
   const todoDate = date || new Date().toISOString().split('T')[0];
   
-  const result = db.prepare(
-    'INSERT INTO todos (user_id, task, date) VALUES (?, ?, ?)'
-  ).run(userId, task, todoDate);
+  const result = await db.run(
+    'INSERT INTO todos (user_id, task, date) VALUES ($1, $2, $3) RETURNING id',
+    [userId, task, todoDate]
+  );
   
   res.status(201).json({ 
-    id: result.lastInsertRowid,
+    id: result.rows[0].id,
     task,
     completed: false,
     date: todoDate
@@ -53,52 +54,54 @@ router.post('/', (req, res) => {
 });
 
 // Toggle todo
-router.patch('/:id', (req, res) => {
+router.patch('/:id', async (req, res) => {
   const userId = req.session.user.id;
   const { id } = req.params;
   const { completed, task, date } = req.body;
   
-  const todo = db.prepare('SELECT * FROM todos WHERE id = ? AND user_id = ?').get(id, userId);
+  const todo = await db.get('SELECT * FROM todos WHERE id = $1 AND user_id = $2', [id, userId]);
   if (!todo) {
     return res.status(404).json({ error: '找不到此任務' });
   }
   
   const updates = [];
   const params = [];
+  let paramIndex = 1;
   
   if (completed !== undefined) {
-    updates.push('completed = ?');
-    params.push(completed ? 1 : 0);
+    updates.push(`completed = $${paramIndex++}`);
+    params.push(completed);
   }
   if (task !== undefined) {
-    updates.push('task = ?');
+    updates.push(`task = $${paramIndex++}`);
     params.push(task);
   }
   if (date !== undefined) {
-    updates.push('date = ?');
+    updates.push(`date = $${paramIndex++}`);
     params.push(date);
   }
   
   if (updates.length > 0) {
-    updates.push("updated_at = datetime('now')");
+    updates.push('updated_at = CURRENT_TIMESTAMP');
     params.push(id, userId);
     
-    db.prepare(
-      `UPDATE todos SET ${updates.join(', ')} WHERE id = ? AND user_id = ?`
-    ).run(...params);
+    await db.run(
+      `UPDATE todos SET ${updates.join(', ')} WHERE id = $${paramIndex++} AND user_id = $${paramIndex}`,
+      params
+    );
   }
   
   res.json({ message: '已更新' });
 });
 
 // Delete todo
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
   const userId = req.session.user.id;
   const { id } = req.params;
   
-  const result = db.prepare('DELETE FROM todos WHERE id = ? AND user_id = ?').run(id, userId);
+  const result = await db.run('DELETE FROM todos WHERE id = $1 AND user_id = $2', [id, userId]);
   
-  if (result.changes === 0) {
+  if (result.rowCount === 0) {
     return res.status(404).json({ error: '找不到此任務' });
   }
   

@@ -4,7 +4,7 @@ import db from '../db/index.js';
 const router = Router();
 
 // Add focus time
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   const userId = req.session.user.id;
   const { minutes } = req.body;
   
@@ -12,11 +12,12 @@ router.post('/', (req, res) => {
     return res.status(400).json({ error: '請輸入有效的專注時間' });
   }
   
-  db.prepare(
-    "UPDATE users SET focus_time = focus_time + ?, updated_at = datetime('now') WHERE id = ?"
-  ).run(minutes, userId);
+  await db.run(
+    'UPDATE users SET focus_time = focus_time + $1, updated_at = CURRENT_TIMESTAMP WHERE id = $2',
+    [minutes, userId]
+  );
   
-  const user = db.prepare('SELECT focus_time FROM users WHERE id = ?').get(userId);
+  const user = await db.get('SELECT focus_time FROM users WHERE id = $1', [userId]);
   
   res.json({ 
     message: '已記錄專注時間',
@@ -25,10 +26,10 @@ router.post('/', (req, res) => {
 });
 
 // Get focus time
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
   const userId = req.session.user.id;
   
-  const user = db.prepare('SELECT focus_time FROM users WHERE id = ?').get(userId);
+  const user = await db.get('SELECT focus_time FROM users WHERE id = $1', [userId]);
   
   res.json({ focusTime: user?.focus_time || 0 });
 });
