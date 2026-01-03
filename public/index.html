@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>白日夢冒險王 | 登入</title>
+    <style>
+        body { background: #1a1a1a; color: white; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .card { background: #2d2d2d; padding: 40px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); text-align: center; width: 300px; }
+        h1 { margin-bottom: 20px; color: #4CAF50; }
+        input { width: 100%; padding: 10px; margin: 10px 0; border: none; border-radius: 5px; box-sizing: border-box;}
+        button { width: 100%; padding: 10px; margin-top: 10px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .btn-login { background: #4CAF50; color: white; }
+        .btn-register { background: #555; color: white; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>🚀 追夢系統</h1>
+        <input type="text" id="username" placeholder="帳號">
+        <input type="password" id="password" placeholder="密碼">
+        <button class="btn-login" onclick="doLogin()">登入</button>
+        <button class="btn-register" onclick="doRegister()">註冊新帳號</button>
+    </div>
+
+    <script>
+        async function doRegister() {
+            const u = document.getElementById('username').value;
+            const p = document.getElementById('password').value;
+            const res = await fetch('/api/register', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({username: u, password: p})
+            });
+            const data = await res.json();
+            alert(data.message);
+        }
+
+        async function doLogin() {
+            const u = document.getElementById('username').value;
+            const p = document.getElementById('password').value;
+            const res = await fetch('/api/login', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({username: u, password: p})
+            });
+            const data = await res.json();
+            if(data.success) {
+                alert('登入成功！接下來我們會把這裡變成儀表板');
+            } else {
+                alert(data.message);
+            }
+        }
+    </script>
+</body>
+</html>
