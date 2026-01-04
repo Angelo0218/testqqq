@@ -97,6 +97,7 @@
         <q-icon name="auto_awesome" size="16px" color="grey-7" />
         <span>Dream Tracker</span>
       </div>
+      <div class="auth-version">v1.0.1</div>
     </div>
 
     <!-- 主應用程式 -->
