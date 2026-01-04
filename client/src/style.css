@@ -3152,78 +3152,111 @@ body {
 
 /* ===== 手機版觸控優化 ===== */
 
-/* 手機版登出按鈕優化 */
-.mobile-logout-btn {
-    width: 48px !important;
-    height: 48px !important;
-    min-width: 48px !important;
-    min-height: 48px !important;
-    background: rgba(255, 45, 85, 0.15) !important;
-    border: 1px solid rgba(255, 45, 85, 0.3) !important;
-    border-radius: var(--radius-md) !important;
-    color: var(--color-primary) !important;
-    transition: all var(--transition-normal);
+/* 禁止縮放相關 */
+html, body {
+    touch-action: manipulation;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
 }
 
-.mobile-logout-btn:hover,
+/* 手機版登出按鈕 - 固定在右上角 */
+.mobile-logout-btn {
+    position: fixed !important;
+    top: 12px !important;
+    right: 12px !important;
+    z-index: 1000 !important;
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    background: rgba(28, 28, 30, 0.9) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    border: 1px solid rgba(255, 45, 85, 0.4) !important;
+    border-radius: 12px !important;
+    color: var(--color-primary) !important;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
 .mobile-logout-btn:active {
-    background: rgba(255, 45, 85, 0.25) !important;
+    background: rgba(255, 45, 85, 0.2) !important;
     transform: scale(0.95);
 }
 
 .mobile-logout-btn .q-icon {
-    font-size: 24px !important;
+    font-size: 20px !important;
 }
 
-/* 底部導航優化 - 增大觸控區域 */
+/* 底部導航 - 固定大小，禁止拖曳 */
+.bottom-nav {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 72px !important;
+    min-height: 72px !important;
+    max-height: 72px !important;
+    padding-bottom: env(safe-area-inset-bottom, 0px) !important;
+    background: rgba(28, 28, 30, 0.95) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border-top: 1px solid var(--border-color) !important;
+    touch-action: none !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+}
+
+.bottom-tabs {
+    height: 72px !important;
+    min-height: 72px !important;
+}
+
+.bottom-tab {
+    flex: 1 !important;
+    min-width: 60px !important;
+    max-width: 100px !important;
+    height: 72px !important;
+    padding: 8px 4px !important;
+}
+
+.tab-content {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 100% !important;
+    gap: 4px !important;
+}
+
+.tab-icon-wrapper {
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 8px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.tab-icon-wrapper .q-icon {
+    font-size: 20px !important;
+}
+
+.tab-label {
+    font-size: 10px !important;
+    font-weight: 600 !important;
+    white-space: nowrap !important;
+}
+
+/* 頁面內容底部留白 */
 @media (max-width: 1100px) {
-    .bottom-nav {
-        padding-bottom: max(env(safe-area-inset-bottom, 8px), 8px) !important;
-    }
-    
-    .bottom-tabs {
-        height: 64px !important;
-    }
-    
-    .bottom-tab {
-        min-width: 56px !important;
-        min-height: 64px !important;
-        padding: 8px 4px !important;
-    }
-    
-    .tab-content {
-        padding: 8px 0 !important;
-        gap: 4px !important;
-    }
-    
-    .tab-icon-wrapper {
-        width: 36px !important;
-        height: 36px !important;
-    }
-    
-    .tab-icon-wrapper .q-icon {
-        font-size: 22px !important;
-    }
-    
-    .tab-label {
-        font-size: 11px !important;
-        font-weight: 600 !important;
-    }
-    
-    /* 頁面內容底部留白，避免被 navbar 遮擋 */
     .q-page {
-        padding-bottom: 80px !important;
+        padding-bottom: 88px !important;
     }
-}
-
-/* 手機版 header 優化 */
-@media (max-width: 1100px) {
+    
+    /* header 調整，給登出按鈕留空間 */
     .header {
         padding: var(--space-sm) 0;
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        background: var(--bg-primary);
+        padding-right: 56px !important;
     }
     
     .greeting {

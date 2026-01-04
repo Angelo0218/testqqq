@@ -176,6 +176,17 @@
 
       <!-- 主內容區 -->
       <q-page-container>
+        <!-- 手機版登出按鈕 - 固定右上角 -->
+        <q-btn
+          flat
+          round
+          icon="logout"
+          class="mobile-logout-btn mobile-only"
+          @click="logout"
+        >
+          <q-tooltip>{{ UI_TEXT.auth.logout }}</q-tooltip>
+        </q-btn>
+        
         <q-page class="q-pa-md">
           <!-- 頁首 -->
           <header class="header q-mb-lg">
@@ -183,16 +194,6 @@
               <div class="greeting">{{ getGreeting() }}，{{ userName || '探險家' }}</div>
               <div class="header-date">{{ formatDateChinese(new Date()) }}</div>
             </div>
-            <q-btn
-              flat
-              round
-              icon="logout"
-              size="lg"
-              class="mobile-logout-btn mobile-only"
-              @click="logout"
-            >
-              <q-tooltip>{{ UI_TEXT.auth.logout }}</q-tooltip>
-            </q-btn>
           </header>
 
           <!-- 總覽頁面 - Apple Fitness 風格 -->
@@ -1118,7 +1119,7 @@
                       <div class="goal-card-details">
                         <div class="goal-card-label">{{ getGoalLabel(goal.type) }}</div>
                         <div class="goal-card-target">
-                          目標: {{ goal.target_value }} {{ getGoalUnit(goal.type) }}
+                          目標: {{ goal.targetValue }} {{ getGoalUnit(goal.type) }}
                         </div>
                       </div>
                     </div>
@@ -1186,7 +1187,7 @@
 
 
 <script setup>
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { useQuasar } from 'quasar';
 import ActivityRing from './components/ActivityRing.vue';
 import TomatoTimer from './components/TomatoTimer.vue';
@@ -1338,6 +1339,7 @@ function navigateTo(section) {
 }
 
 const summaryText = ref('');
+const summaryNeedsRefresh = ref(false); // 標記是否需要刷新總覽
 const summaryStats = ref({
   focusMinutes: 0,
   todoRate: 0,
@@ -1466,6 +1468,7 @@ const isLoadingAchievements = ref(false);
 
 // Goals data
 const userGoals = ref([]);
+const goalProgressMap = ref({}); // 儲存目標進度資料
 const isLoadingGoals = ref(false);
 const editingGoal = ref(null);
 const newGoalType = ref('focus');
@@ -1574,9 +1577,20 @@ async function api(path, options = {}) {
     headers: { 'Content-Type': 'application/json', ...(options.headers || {}) },
     ...options
   });
-  if (res.status === 401) {
-    authed.value = false;
-    throw new Error('unauthorized');
+  // 只有在非登入相關的 API 返回 401 時才登出
+  if (res.status === 401 && !path.includes('/api/auth/')) {
+    // 先嘗試重新驗證
+    try {
+      const authRes = await fetch('/api/auth/me', { credentials: 'include' });
+      const authData = await authRes.json();
+      if (!authData?.authenticated) {
+        authed.value = false;
+        throw new Error('unauthorized');
+      }
+    } catch {
+      authed.value = false;
+      throw new Error('unauthorized');
+    }
   }
   return res;
 }
@@ -1656,15 +1670,24 @@ async function logout() {
 async function refreshSummary(forceRefresh = false) {
   const today = new Date().toISOString().split('T')[0];
   const cacheKey = `summary_${userName.value}_${today}`;
+  const statsCacheKey = `summary_stats_${userName.value}_${today}`;
   
-  // 檢查快取
-  if (!forceRefresh) {
+  // 檢查快取（只有非強制刷新且不需要刷新時才使用快取）
+  if (!forceRefresh && !summaryNeedsRefresh.value) {
     const cached = localStorage.getItem(cacheKey);
     if (cached) {
       try {
         const data = JSON.parse(cached);
         summaryText.value = data.summary || '';
         summaryStats.value = data.stats || summaryStats.value;
+        // 載入快取的目標進度
+        if (data.goals) {
+          const progressMap = {};
+          data.goals.forEach(g => {
+            progressMap[g.id] = g.percentage || 0;
+          });
+          goalProgressMap.value = progressMap;
+        }
         return;
       } catch (e) {
         // 快取無效，繼續呼叫 API
@@ -1675,12 +1698,41 @@ async function refreshSummary(forceRefresh = false) {
   isAnalyzing.value = true;
   try {
     const res = await api('/api/summary');
-    const data = await res.json();
-    summaryText.value = data.summary || '';
-    summaryStats.value = data.stats || summaryStats.value;
-    
-    // 儲存快取
-    localStorage.setItem(cacheKey, JSON.stringify(data));
+    if (res.ok) {
+      const data = await res.json();
+      
+      // 檢查數據是否有變化
+      const oldStats = localStorage.getItem(statsCacheKey);
+      const newStatsStr = JSON.stringify(data.stats);
+      const statsChanged = oldStats !== newStatsStr;
+      
+      // 更新統計數據
+      summaryStats.value = data.stats || summaryStats.value;
+      localStorage.setItem(statsCacheKey, newStatsStr);
+      
+      // 更新目標進度
+      if (data.goals) {
+        const progressMap = {};
+        data.goals.forEach(g => {
+          progressMap[g.id] = g.percentage || 0;
+        });
+        goalProgressMap.value = progressMap;
+      }
+      
+      // 只有在強制刷新或數據有變化時才更新 AI 激勵文字
+      if (forceRefresh || statsChanged || summaryNeedsRefresh.value) {
+        summaryText.value = data.summary || '';
+        // 儲存完整快取
+        localStorage.setItem(cacheKey, JSON.stringify(data));
+      }
+      
+      // 重置刷新標記
+      summaryNeedsRefresh.value = false;
+    }
+  } catch (err) {
+    if (err.message !== 'unauthorized') {
+      console.error('Failed to refresh summary:', err);
+    }
   } finally {
     isAnalyzing.value = false;
   }
@@ -1698,27 +1750,48 @@ async function loadTodos() {
 
 async function addTodo() {
   if (!newTask.value) return;
-  await api('/api/todos', {
-    method: 'POST',
-    body: JSON.stringify({ 
-      task: newTask.value, 
-      date: newTaskDate.value,
-      priority: newTaskPriority.value
-    })
-  });
-  newTask.value = '';
-  newTaskPriority.value = 'medium';
-  await loadTodos();
-  await refreshSummary();
+  try {
+    const res = await api('/api/todos', {
+      method: 'POST',
+      body: JSON.stringify({ 
+        task: newTask.value, 
+        date: newTaskDate.value,
+        priority: newTaskPriority.value
+      })
+    });
+    if (res.ok) {
+      newTask.value = '';
+      newTaskPriority.value = 'medium';
+      await loadTodos();
+      // 標記數據已更新，下次進入總覽時刷新
+      summaryNeedsRefresh.value = true;
+      $q.notify({ type: 'positive', message: '任務已新增', icon: 'check_circle' });
+    } else {
+      const data = await res.json();
+      $q.notify({ type: 'negative', message: data.error || '新增失敗', icon: 'error' });
+    }
+  } catch (err) {
+    if (err.message !== 'unauthorized') {
+      $q.notify({ type: 'negative', message: '新增任務失敗，請稍後再試', icon: 'error' });
+    }
+  }
 }
 
 async function toggleTodo(todo, completed) {
-  await api(`/api/todos/${todo.id}`, {
-    method: 'PATCH',
-    body: JSON.stringify({ completed })
-  });
-  await loadTodos();
-  await refreshSummary();
+  try {
+    const res = await api(`/api/todos/${todo.id}`, {
+      method: 'PATCH',
+      body: JSON.stringify({ completed })
+    });
+    if (res.ok) {
+      await loadTodos();
+      summaryNeedsRefresh.value = true;
+    }
+  } catch (err) {
+    if (err.message !== 'unauthorized') {
+      $q.notify({ type: 'negative', message: '更新任務失敗', icon: 'error' });
+    }
+  }
 }
 
 // TaskCard 事件處理
@@ -1821,13 +1894,25 @@ async function uploadMeal(event) {
   const reader = new FileReader();
   reader.onload = async () => {
     try {
-      await api('/api/meals', {
+      const res = await api('/api/meals', {
         method: 'POST',
         body: JSON.stringify({ image: reader.result })
       });
-      await loadMeals();
-      await refreshSummary();
+      if (res.ok) {
+        await loadMeals();
+        // 標記需要刷新，並強制刷新總覽數據
+        summaryNeedsRefresh.value = true;
+        await refreshSummary(true);
+        $q.notify({ type: 'positive', message: '飲食分析完成', icon: 'check_circle' });
+      } else {
+        const data = await res.json();
+        $q.notify({ type: 'negative', message: data.error || '分析失敗', icon: 'error' });
+      }
       event.target.value = '';
+    } catch (err) {
+      if (err.message !== 'unauthorized') {
+        $q.notify({ type: 'negative', message: '上傳失敗，請稍後再試', icon: 'error' });
+      }
     } finally {
       isAnalyzing.value = false;
     }
@@ -2176,7 +2261,7 @@ async function saveGoal() {
       method: 'POST',
       body: JSON.stringify({
         type: newGoalType.value,
-        target_value: newGoalValue.value
+        targetValue: newGoalValue.value
       })
     });
     await loadGoals();
@@ -2219,9 +2304,8 @@ function getGoalUnit(type) {
 }
 
 function getGoalProgress(goal) {
-  // This would need to be calculated based on current values
-  // For now, return a placeholder
-  return 0;
+  // 從 goalProgressMap 取得進度，如果沒有則回傳 0
+  return goalProgressMap.value[goal.id] || 0;
 }
 
 async function refreshAll() {
@@ -2241,6 +2325,13 @@ onMounted(async () => {
   await checkAuth();
   if (authed.value) {
     await refreshAll();
+  }
+});
+
+// 監聽頁面切換，進入總覽時檢查是否需要刷新
+watch(activeSection, async (newSection) => {
+  if (newSection === 'summary' && summaryNeedsRefresh.value && authed.value) {
+    await refreshSummary(true);
   }
 });
 </script>
