@@ -1603,10 +1603,18 @@ async function login() {
       $q.notify({ type: 'positive', message: `歡迎回來，${userName.value}！`, icon: 'check_circle' });
       await refreshAll();
     } else {
-      $q.notify({ type: 'negative', message: data.error || '請檢查帳號密碼', icon: 'error' });
+      // 根據 HTTP 狀態碼顯示適當的錯誤訊息
+      const errorMsg = data.error || (res.status === 401 ? '帳號或密碼錯誤' : '登入失敗，請稍後再試');
+      $q.notify({ type: 'negative', message: errorMsg, icon: 'error' });
     }
-  } catch {
-    $q.notify({ type: 'negative', message: '網路連線錯誤，請稍後再試', icon: 'wifi_off' });
+  } catch (err) {
+    // 只有真正的網路錯誤才顯示網路連線錯誤
+    const isNetworkError = err instanceof TypeError && err.message.includes('fetch');
+    $q.notify({ 
+      type: 'negative', 
+      message: isNetworkError ? '網路連線錯誤，請稍後再試' : '登入失敗，請檢查帳號密碼', 
+      icon: isNetworkError ? 'wifi_off' : 'error' 
+    });
   } finally {
     isLoggingIn.value = false;
   }
@@ -1625,8 +1633,13 @@ async function register() {
     } else {
       $q.notify({ type: 'negative', message: data.error || '帳號可能已存在', icon: 'error' });
     }
-  } catch {
-    $q.notify({ type: 'negative', message: '網路連線錯誤，請稍後再試', icon: 'wifi_off' });
+  } catch (err) {
+    const isNetworkError = err instanceof TypeError && err.message.includes('fetch');
+    $q.notify({ 
+      type: 'negative', 
+      message: isNetworkError ? '網路連線錯誤，請稍後再試' : '註冊失敗，請稍後再試', 
+      icon: isNetworkError ? 'wifi_off' : 'error' 
+    });
   } finally {
     isRegistering.value = false;
   }

@@ -19,8 +19,8 @@ export default defineConfig({
         short_name: 'Dream',
         start_url: '/',
         display: 'standalone',
-        background_color: '#000000',
-        theme_color: '#FF2D55',
+        background_color: '#1C1C1E',
+        theme_color: '#1C1C1E',
         icons: [
           {
             src: '/pwa-icon.svg',
