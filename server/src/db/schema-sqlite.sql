@@ -1,70 +1,70 @@
 -- Users table
 CREATE TABLE IF NOT EXISTS users (
-  id SERIAL PRIMARY KEY,
-  username VARCHAR(255) UNIQUE NOT NULL,
-  password VARCHAR(255) NOT NULL,
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  username TEXT UNIQUE NOT NULL,
+  password TEXT NOT NULL,
   focus_time INTEGER DEFAULT 0,
   streak INTEGER DEFAULT 0,
-  last_login DATE,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  last_login TEXT,
+  created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+  updated_at TEXT DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Todos table
 CREATE TABLE IF NOT EXISTS todos (
-  id SERIAL PRIMARY KEY,
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
   user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   task TEXT NOT NULL,
-  completed BOOLEAN DEFAULT FALSE,
-  date DATE NOT NULL,
-  priority VARCHAR(10) DEFAULT 'medium' CHECK (priority IN ('high', 'medium', 'low')),
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  completed INTEGER DEFAULT 0,
+  date TEXT NOT NULL,
+  priority TEXT DEFAULT 'medium' CHECK (priority IN ('high', 'medium', 'low')),
+  created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+  updated_at TEXT DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Diaries table
 CREATE TABLE IF NOT EXISTS diaries (
-  id SERIAL PRIMARY KEY,
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
   user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   content TEXT NOT NULL,
   ai_response TEXT,
-  date DATE NOT NULL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  date TEXT NOT NULL,
+  created_at TEXT DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Meals table
 CREATE TABLE IF NOT EXISTS meals (
-  id SERIAL PRIMARY KEY,
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
   user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   calories INTEGER DEFAULT 0,
   protein INTEGER DEFAULT 0,
   fat INTEGER DEFAULT 0,
   carb INTEGER DEFAULT 0,
   summary TEXT,
-  date DATE NOT NULL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  date TEXT NOT NULL,
+  created_at TEXT DEFAULT CURRENT_TIMESTAMP
 );
 
--- Goals table (目標設定)
+-- Goals table
 CREATE TABLE IF NOT EXISTS goals (
-  id SERIAL PRIMARY KEY,
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
   user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-  type VARCHAR(50) NOT NULL CHECK (type IN ('focus', 'task', 'calories')),
+  type TEXT NOT NULL CHECK (type IN ('focus', 'task', 'calories')),
   target_value INTEGER NOT NULL CHECK (target_value > 0),
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+  updated_at TEXT DEFAULT CURRENT_TIMESTAMP
 );
 
--- Achievements table (成就系統)
+-- Achievements table
 CREATE TABLE IF NOT EXISTS achievements (
-  id SERIAL PRIMARY KEY,
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
   user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-  achievement_id VARCHAR(100) NOT NULL,
-  unlocked_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  achievement_id TEXT NOT NULL,
+  unlocked_at TEXT DEFAULT CURRENT_TIMESTAMP,
   UNIQUE(user_id, achievement_id)
 );
 
--- Indexes for better query performance
+-- Indexes
 CREATE INDEX IF NOT EXISTS idx_todos_user_id ON todos(user_id);
 CREATE INDEX IF NOT EXISTS idx_todos_date ON todos(date);
 CREATE INDEX IF NOT EXISTS idx_diaries_user_id ON diaries(user_id);

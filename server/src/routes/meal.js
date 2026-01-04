@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import db from '../db/index.js';
 import { analyzeMealImage } from '../services/ai.js';
+import { checkAchievementsByCategory } from '../services/achievements.js';
 
 const router = Router();
 
@@ -52,11 +53,15 @@ router.post('/', async (req, res) => {
     [userId, nutrients.calories, nutrients.protein, nutrients.fat, nutrients.carb, nutrients.summary, date]
   );
   
+  // Check meal achievements after recording
+  const newAchievements = await checkAchievementsByCategory(userId, 'meal');
+  
   res.status(201).json({ 
     id: result.rows[0].id,
     nutrients,
     summary: nutrients.summary,
-    date
+    date,
+    newAchievements
   });
 });
 

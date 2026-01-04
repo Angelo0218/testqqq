@@ -1,591 +1,758 @@
+/* ===== Apple Fitness 風格 - Quasar 深色主題 ===== */
+
 :root {
-    /* ===== 色彩系統 (需求 8.3) ===== */
-    --bg: #0c1511;
-    --panel: #18221c;
-    --panel-2: #1e2a23;
-    --panel-3: #141d18;
-    --accent: #22c55e;
-    --accent-2: #10b981;
-    --accent-hover: #16a34a;
-    --accent-active: #15803d;
-    --accent-glow: rgba(34, 197, 94, 0.2);
-    --accent-light: rgba(34, 197, 94, 0.12);
-    --accent-border: rgba(34, 197, 94, 0.25);
-    --text: #e7f3ec;
-    --muted: #a4b6aa;
-    --danger: #f87171;
-    --danger-hover: #ef4444;
-    --danger-active: #dc2626;
-    --card: #1a241e;
-    --border: #223026;
-    --border-hover: #2b3d30;
+    /* 色彩系統 - Apple Fitness 風格 */
+    --color-primary: #FF2D55;
+    --color-secondary: #30D158;
+    --color-accent: #0A84FF;
+    --color-orange: #FF9500;
+    --color-purple: #BF5AF2;
+    --color-yellow: #FFD60A;
+    --color-teal: #64D2FF;
+    --color-pink: #FF375F;
     
-    /* ===== 圓角系統 (需求 8.1) ===== */
+    /* 背景色彩 */
+    --bg-primary: #000000;
+    --bg-secondary: #1C1C1E;
+    --bg-tertiary: #2C2C2E;
+    --bg-card: #1C1C1E;
+    
+    /* 文字色彩 */
+    --text-primary: #FFFFFF;
+    --text-secondary: #8E8E93;
+    --text-tertiary: #636366;
+    
+    /* 邊框色彩 */
+    --border-color: #38383A;
+    
+    /* 間距系統 (基於 8px) */
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 32px;
+    --space-xxl: 48px;
+    
+    /* 圓角系統 */
     --radius-sm: 8px;
     --radius-md: 12px;
-    --radius-lg: 14px;
-    --radius-xl: 18px;
-    --radius-2xl: 20px;
-    --radius-full: 999px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+    --radius-full: 9999px;
     
-    /* ===== 間距系統 (需求 8.2) ===== */
-    --space-1: 4px;
-    --space-2: 8px;
-    --space-3: 12px;
-    --space-4: 16px;
-    --space-5: 20px;
-    --space-6: 24px;
-    --space-7: 28px;
-    --space-8: 32px;
-    
-    /* ===== 過渡動畫 ===== */
+    /* 動畫過渡 */
     --transition-fast: 0.15s ease;
-    --transition-normal: 0.2s ease;
-    --transition-slow: 0.3s ease;
+    --transition-normal: 0.25s ease;
+    --transition-slow: 0.35s ease;
+    
+    /* 觸控目標最小尺寸 */
+    --touch-target-min: 44px;
 }
 
 * { box-sizing: border-box; }
 
 body {
     margin: 0;
-    font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
-    background: radial-gradient(800px 600px at 20% -10%, #1e3a2a 0%, #0c1511 60%);
-    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 
+                 'Helvetica Neue', 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
 }
 
-.p-component {
-    font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+/* ===== 全域按鈕樣式 - 移除所有漸層 ===== */
+.q-btn {
+    background-image: none !important;
 }
 
-.p-inputtext,
-.p-password input,
-.p-textarea,
-.p-calendar input {
-    background: #111b16;
-    border: 1px solid var(--border);
-    color: var(--text);
-    border-radius: var(--radius-md);
-    padding: var(--space-3) var(--space-3);
-    transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+.q-btn--unelevated {
+    background-image: none !important;
 }
 
-.p-inputtext:focus,
-.p-password input:focus,
-.p-textarea:focus,
-.p-calendar input:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 2px var(--accent-light);
+.q-btn--outline {
+    background-image: none !important;
 }
 
-.p-inputtext:hover:not(:focus),
-.p-password input:hover:not(:focus),
-.p-textarea:hover:not(:focus),
-.p-calendar input:hover:not(:focus) {
-    border-color: var(--border-hover);
+/* 修復 Quasar 按鈕文字顏色 */
+.q-btn.bg-warning,
+.q-btn[class*="bg-warning"] {
+    color: #1a1a1a !important;
 }
 
-.p-inputtext::placeholder,
-.p-textarea::placeholder {
-    color: #7d9185;
+.q-btn.bg-warning .q-spinner,
+.q-btn.bg-warning .q-btn__content {
+    color: #1a1a1a !important;
 }
 
-.p-button {
-    border-radius: var(--radius-md);
-    border: 1px solid transparent;
-    background: var(--accent);
-    color: #03130c;
-    font-weight: 600;
-    box-shadow: 0 10px 18px var(--accent-glow);
-    transition: background var(--transition-normal), transform var(--transition-fast), box-shadow var(--transition-normal);
+.q-btn.bg-accent,
+.q-btn[class*="bg-accent"],
+.q-btn.bg-primary,
+.q-btn[class*="bg-primary"] {
+    color: #ffffff !important;
 }
 
-.p-button:enabled:hover {
-    background: var(--accent-hover);
-    transform: translateY(-1px);
-    box-shadow: 0 12px 20px var(--accent-glow);
+.q-btn.bg-accent .q-spinner,
+.q-btn.bg-accent .q-btn__content,
+.q-btn.bg-primary .q-spinner,
+.q-btn.bg-primary .q-btn__content {
+    color: #ffffff !important;
 }
 
-.p-button:enabled:active {
-    background: var(--accent-active);
-    transform: translateY(0);
-    box-shadow: 0 8px 16px var(--accent-glow);
-}
-
-.p-button.p-button-secondary,
-.p-button.p-button-help,
-.p-button.p-button-info {
-    background: #243428;
-    color: var(--text);
-    border: 1px solid var(--border-hover);
-    box-shadow: none;
-}
-
-.p-button.p-button-secondary:enabled:hover,
-.p-button.p-button-help:enabled:hover,
-.p-button.p-button-info:enabled:hover {
-    background: #2b3d30;
-    border-color: #3d5244;
-}
-
-.p-button.p-button-secondary:enabled:active,
-.p-button.p-button-help:enabled:active,
-.p-button.p-button-info:enabled:active {
-    background: #223026;
-}
-
-.p-button.p-button-danger {
-    background: var(--danger);
-    border-color: var(--danger);
-    color: #fff;
-    box-shadow: none;
-}
-
-.p-button.p-button-danger:enabled:hover {
-    background: var(--danger-hover);
-    border-color: var(--danger-hover);
-}
-
-.p-button.p-button-danger:enabled:active {
-    background: var(--danger-active);
-    border-color: var(--danger-active);
-}
-
-.p-button.p-button-text {
-    background: transparent;
-    border: none;
-    box-shadow: none;
-    color: var(--accent);
-}
-
-.p-button.p-button-text:enabled:hover {
-    background: var(--accent-light);
-    transform: none;
-}
-
-.p-button.p-button-text:enabled:active {
-    background: rgba(34, 197, 94, 0.2);
-}
-
-.p-calendar .p-button {
-    box-shadow: none;
-}
-
-.p-card {
-    background: var(--panel-2);
-    border-radius: var(--radius-xl);
-    border: 1px solid var(--border);
-    color: var(--text);
-    transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
-}
-
-.p-card:hover {
-    border-color: var(--border-hover);
-}
-
-.p-password .p-password-icon {
-    color: var(--muted);
-}
-
-.p-checkbox .p-checkbox-box {
-    background: #111b16;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    transition: background var(--transition-normal), border-color var(--transition-normal);
-}
-
-.p-checkbox .p-checkbox-box:hover {
-    border-color: var(--border-hover);
-}
-
-.p-checkbox .p-checkbox-box.p-highlight {
-    background: var(--accent);
-    border-color: var(--accent);
-}
-
-.p-checkbox .p-checkbox-box.p-highlight:hover {
-    background: var(--accent-hover);
-    border-color: var(--accent-hover);
-}
-
-.app-shell {
-    display: grid;
-    grid-template-columns: 260px 1fr;
+/* ===== 登入頁面 - Apple Fitness 風格 ===== */
+.auth-container {
     min-height: 100vh;
-}
-
-/* 桌面版 (>1100px) - 側邊欄固定顯示 */
-@media (min-width: 1101px) {
-    .app-shell {
-        grid-template-columns: 1fr;
-    }
-    
-    .sidebar {
-        display: flex;
-        position: fixed;
-        left: 0;
-        top: 0;
-        bottom: 0;
-        width: 260px;
-        z-index: 100;
-    }
-    
-    .main {
-        margin-left: 260px;
-        width: calc(100% - 260px);
-    }
-    
-    .bottom-nav {
-        display: none !important;
-    }
-}
-
-.sidebar {
-    background: var(--panel);
-    padding: var(--space-7) var(--space-4);
     display: flex;
     flex-direction: column;
-    gap: var(--space-3);
-    border-right: 1px solid var(--border);
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-lg) var(--space-md);
+    background: #000000;
+    position: relative;
+    overflow: hidden;
 }
 
+/* 背景裝飾環 */
+.auth-bg-rings {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.auth-ring {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.15;
+}
+
+.auth-ring-1 {
+    width: 600px;
+    height: 600px;
+    top: -200px;
+    right: -200px;
+    background: conic-gradient(from 0deg, var(--color-primary), var(--color-orange), var(--color-primary));
+    animation: ring-rotate 20s linear infinite;
+}
+
+.auth-ring-2 {
+    width: 400px;
+    height: 400px;
+    bottom: -100px;
+    left: -100px;
+    background: conic-gradient(from 120deg, var(--color-secondary), var(--color-teal), var(--color-secondary));
+    animation: ring-rotate 15s linear infinite reverse;
+}
+
+.auth-ring-3 {
+    width: 300px;
+    height: 300px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: conic-gradient(from 240deg, var(--color-accent), var(--color-purple), var(--color-accent));
+    animation: ring-rotate 25s linear infinite;
+}
+
+@keyframes ring-rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.auth-ring-3 {
+    animation: ring-rotate-center 25s linear infinite;
+}
+
+@keyframes ring-rotate-center {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Logo 區域 */
+.auth-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: var(--space-xl);
+    position: relative;
+    z-index: 1;
+}
+
+.auth-logo-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: var(--radius-xl);
+    background: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--space-md);
+    box-shadow: 
+        0 8px 32px rgba(255, 45, 85, 0.35),
+        0 0 60px rgba(255, 45, 85, 0.15);
+    animation: logo-pulse 3s ease-in-out infinite;
+}
+
+@keyframes logo-pulse {
+    0%, 100% { 
+        box-shadow: 
+            0 8px 32px rgba(255, 45, 85, 0.4),
+            0 0 60px rgba(255, 45, 85, 0.2);
+    }
+    50% { 
+        box-shadow: 
+            0 8px 40px rgba(255, 45, 85, 0.5),
+            0 0 80px rgba(255, 45, 85, 0.3);
+    }
+}
+
+.auth-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: var(--space-xs);
+    letter-spacing: -0.5px;
+}
+
+.auth-subtitle {
+    color: var(--text-secondary);
+    font-size: 15px;
+    text-align: center;
+}
+
+/* 登入卡片 */
+.auth-card {
+    width: 100%;
+    max-width: 360px;
+    margin: 0 auto;
+    background: rgba(28, 28, 30, 0.8) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: var(--radius-xl) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 
+        0 24px 80px rgba(0, 0, 0, 0.5),
+        0 0 1px rgba(255, 255, 255, 0.1) inset;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.auth-card .q-card__section {
+    padding: var(--space-lg);
+}
+
+.auth-card .q-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    align-items: center;
+    text-align: center;
+}
+
+.auth-card .q-form > * {
+    width: 100%;
+}
+
+.auth-card .auth-divider {
+    width: 100%;
+}
+
+/* 輸入框聚焦動畫 */
+.auth-card .q-field {
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.auth-card .q-field.input-focused {
+    transform: scale(1.02);
+}
+
+.auth-card .q-field--filled .q-field__control {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border-radius: var(--radius-md) !important;
+    transition: all var(--transition-normal);
+}
+
+.auth-card .q-field--filled .q-field__control::before,
+.auth-card .q-field--filled .q-field__control::after {
+    border: none !important;
+    display: none !important;
+}
+
+.auth-card .q-field--filled.input-focused .q-field__control {
+    background: rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 0 0 2px rgba(255, 45, 85, 0.3);
+}
+
+.auth-card .q-field--filled .q-field__control::before {
+    border-color: transparent !important;
+}
+
+.auth-card .q-field--filled.input-focused .q-field__control::before {
+    border-color: var(--color-primary) !important;
+}
+
+/* 登入按鈕 */
+.auth-btn {
+    height: 48px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: var(--radius-md) !important;
+    transition: all var(--transition-normal);
+    width: 100% !important;
+    max-width: 320px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+}
+
+.auth-btn .q-btn__content {
+    justify-content: center !important;
+    flex-grow: 1 !important;
+    width: 100% !important;
+    padding-right: 20px !important;
+}
+
+.auth-btn-primary {
+    background: var(--color-primary) !important;
+    background-image: none !important;
+    box-shadow: 0 4px 16px rgba(255, 45, 85, 0.25);
+}
+
+.auth-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 45, 85, 0.35);
+    background: #FF4466 !important;
+    background-image: none !important;
+}
+
+.auth-btn-secondary {
+    border: 1px solid var(--color-primary) !important;
+    color: var(--color-primary) !important;
+    background: transparent !important;
+    background-image: none !important;
+}
+
+.auth-btn-secondary .q-icon {
+    color: var(--color-primary) !important;
+}
+
+.auth-btn-secondary:hover {
+    background: rgba(255, 45, 85, 0.1) !important;
+    background-image: none !important;
+}
+
+/* 分隔線 */
+.auth-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-md);
+    color: var(--text-tertiary);
+    font-size: 13px;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+}
+
+/* 底部裝飾 */
+.auth-footer {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    margin-top: var(--space-xl);
+    color: var(--text-tertiary);
+    font-size: 12px;
+    letter-spacing: 1px;
+    position: relative;
+    z-index: 1;
+}
+
+/* ===== 側邊欄 - iOS 風格 ===== */
+.nav-drawer {
+    background: var(--bg-primary) !important;
+    border-right: 1px solid var(--border-color) !important;
+}
+
+.drawer-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: var(--space-md);
+}
+
+/* 品牌標題 */
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-md);
+    margin-bottom: var(--space-md);
+}
+
+.nav-brand-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-md);
+    background: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(255, 45, 85, 0.25);
+}
+
+.nav-brand-text {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.3px;
+}
+
+/* 導航列表 */
+.nav-list {
+    padding: 0;
+}
+
+.nav-item {
+    border-radius: var(--radius-md) !important;
+    margin-bottom: var(--space-xs);
+    min-height: 48px;
+    transition: all var(--transition-normal);
+}
+
+.nav-item:hover {
+    background: rgba(255, 255, 255, 0.05) !important;
+}
+
+.nav-item-active {
+    background: rgba(255, 45, 85, 0.12) !important;
+}
+
+.nav-icon-wrapper {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-normal);
+}
+
+.nav-icon-active {
+    background: var(--color-primary);
+    box-shadow: 0 2px 8px rgba(255, 45, 85, 0.25);
+}
+
+.nav-indicator {
+    width: 4px;
+    height: 20px;
+    border-radius: var(--radius-full);
+    background: var(--color-primary);
+    box-shadow: 0 0 8px var(--color-primary);
+}
+
+/* 用戶資訊區 */
+.nav-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-md);
+    border-top: 1px solid var(--border-color);
+    margin-top: auto;
+}
+
+.nav-user {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.nav-user-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-user-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.nav-user-status {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.status-dot-small {
+    width: 6px;
+    height: 6px;
+    border-radius: var(--radius-full);
+    background: var(--color-secondary);
+    box-shadow: 0 0 6px var(--color-secondary);
+}
+
+.nav-logout-btn {
+    transition: all var(--transition-normal);
+}
+
+.nav-logout-btn:hover {
+    color: var(--color-primary) !important;
+}
+
+/* 舊的品牌樣式 - 保留相容性 */
 .brand {
     display: flex;
     align-items: center;
-    gap: var(--space-3);
+    gap: var(--space-sm);
     font-weight: 700;
     font-size: 18px;
-    color: var(--accent);
-    margin-bottom: var(--space-3);
+    color: var(--color-primary);
+    padding: var(--space-md);
 }
 
 .status-dot {
     width: 10px;
     height: 10px;
     border-radius: var(--radius-full);
-    background: var(--accent);
-    box-shadow: 0 0 12px var(--accent);
+    background: var(--color-primary);
+    box-shadow: 0 0 12px var(--color-primary);
 }
 
-.menu-button {
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
-    padding: var(--space-3) var(--space-3);
-    border-radius: var(--radius-lg);
-    color: var(--muted);
-    cursor: pointer;
-    transition: background var(--transition-normal), color var(--transition-normal), box-shadow var(--transition-normal);
+.menu-active {
+    background: rgba(255, 45, 85, 0.15) !important;
+    color: var(--color-primary) !important;
 }
 
-.menu-button.active,
-.menu-button:hover {
-    background: #223126;
-    color: var(--text);
-    box-shadow: 0 0 0 1px var(--accent-glow);
-}
-
-.menu-button:active {
-    background: #1a2620;
-}
-
-.sidebar-logout {
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
-    width: 100%;
-    padding: var(--space-3) var(--space-3);
-    border-radius: var(--radius-lg);
-    background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: var(--muted);
-    font-size: 14px;
-    cursor: pointer;
-    transition: all var(--transition-normal);
-}
-
-.sidebar-logout:hover {
-    background: rgba(239, 68, 68, 0.1);
-    border-color: rgba(239, 68, 68, 0.3);
-    color: #f87171;
-}
-
-.sidebar-logout:active {
-    background: rgba(239, 68, 68, 0.15);
-}
-
-.sidebar-logout i {
-    font-size: 16px;
-}
-
-.main {
-    padding: var(--space-7) var(--space-8) 120px;
-}
-
+/* ===== 頁首 ===== */
 .header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: var(--space-5);
-    margin-bottom: var(--space-6);
+    gap: var(--space-lg);
 }
 
 .greeting {
-    color: var(--muted);
+    color: var(--text-secondary);
     font-size: 14px;
-}
-
-.username {
-    font-size: 22px;
-    font-weight: 700;
-}
-
-.header-actions {
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
 }
 
 .header-date {
-    color: var(--muted);
+    color: var(--text-tertiary);
     font-size: 13px;
 }
 
-.header-logout {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: var(--space-2) var(--space-3);
-    border-radius: var(--radius-md);
-    background: var(--accent-light);
-    border: 1px solid var(--accent-border);
-    color: var(--accent);
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all var(--transition-normal);
-}
-
-.header-logout:hover {
-    background: rgba(34, 197, 94, 0.2);
-    border-color: rgba(34, 197, 94, 0.4);
-}
-
-.header-logout:active {
-    background: rgba(34, 197, 94, 0.25);
-}
-
-.header-logout i {
-    font-size: 14px;
-}
-
-.icon-button.p-button {
-    width: 42px;
-    height: 42px;
-    border-radius: var(--radius-full);
-    background: #1b251f;
-    border: 1px solid var(--border);
-    transition: background var(--transition-normal), border-color var(--transition-normal);
-}
-
-.icon-button.p-button:hover {
-    background: #223026;
-    border-color: var(--border-hover);
-}
-
+/* ===== 區塊標題 ===== */
 .section-head {
     display: flex;
     align-items: center;
-    gap: var(--space-2);
-    margin: var(--space-5) 0 var(--space-3);
+    gap: var(--space-sm);
+    margin: var(--space-lg) 0 var(--space-md);
     font-weight: 600;
-    color: #cfe4d6;
+    color: var(--text-primary);
 }
 
 .section-head.row-between {
     justify-content: space-between;
 }
 
+.section-head-left {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+/* ===== Hero 卡片 ===== */
 .hero-card {
-    background: linear-gradient(135deg, rgba(34, 197, 94, 0.18), rgba(15, 23, 42, 0.1));
-    border: 1px solid rgba(34, 197, 94, 0.35);
-    border-radius: var(--radius-2xl);
-    padding: var(--space-5);
-    position: relative;
-    overflow: hidden;
-    transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
-}
-
-.hero-card:hover {
-    border-color: rgba(34, 197, 94, 0.5);
-    box-shadow: 0 8px 32px rgba(34, 197, 94, 0.15);
-}
-
-.hero-card::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at 85% 30%, rgba(34, 197, 94, 0.25), transparent 60%);
-    pointer-events: none;
+    background: linear-gradient(135deg, rgba(255, 45, 85, 0.18), rgba(15, 23, 42, 0.1)) !important;
+    border: 1px solid rgba(255, 45, 85, 0.35) !important;
+    border-radius: var(--radius-xl) !important;
 }
 
 .hero-tag {
     display: inline-flex;
     align-items: center;
-    padding: var(--space-1) var(--space-3);
+    padding: var(--space-xs) var(--space-sm);
     border-radius: var(--radius-full);
-    background: rgba(34, 197, 94, 0.2);
-    color: #b8f4d0;
+    background: rgba(255, 45, 85, 0.2);
+    color: #FFB8C6;
     font-size: 12px;
 }
 
 .hero-title {
     font-size: 20px;
     font-weight: 700;
-    margin-top: var(--space-3);
+    margin-top: var(--space-sm);
 }
 
 .hero-sub {
-    color: var(--muted);
+    color: var(--text-secondary);
     margin-top: 6px;
 }
 
 .hero-metric {
     display: flex;
     align-items: baseline;
-    gap: var(--space-3);
-    margin-top: var(--space-3);
+    gap: var(--space-sm);
+    margin-top: var(--space-sm);
 }
 
 .hero-percent {
     font-size: 36px;
     font-weight: 700;
-    color: #6ee7b7;
+    color: var(--color-primary);
 }
 
 .hero-label {
-    color: var(--muted);
+    color: var(--text-secondary);
 }
 
-.hero-action.p-button {
-    margin-top: var(--space-3);
-    background: var(--accent);
-    border: none;
-    box-shadow: 0 10px 20px rgba(34, 197, 94, 0.3);
-}
-
-.panel {
-    background: var(--panel-2);
-    border-radius: var(--radius-xl);
-    padding: var(--space-4);
-    border: 1px solid var(--border);
-    transition: border-color var(--transition-normal);
-}
-
-.panel:hover {
-    border-color: var(--border-hover);
-}
-
+/* ===== AI 面板 ===== */
 .ai-panel {
-    background: #151f19;
+    background: var(--bg-tertiary) !important;
 }
 
 .ai-quote {
     font-style: italic;
-    color: #cfe4d6;
+    color: var(--text-primary);
     line-height: 1.6;
 }
 
 .ai-author {
-    margin-top: var(--space-3);
+    margin-top: var(--space-sm);
     text-align: center;
     font-size: 12px;
     letter-spacing: 1px;
-    color: #7bb99b;
+    color: var(--color-primary);
 }
 
+/* ===== 快速操作卡片 - Apple Fitness 風格 ===== */
 .action-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: var(--space-3);
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: var(--space-md);
 }
 
 .action-card {
-    background: var(--panel-3);
-    border-radius: var(--radius-xl);
-    padding: var(--space-3);
-    border: 1px solid #1f2a23;
-    color: var(--text);
-    text-align: left;
-    cursor: pointer;
-    transition: background var(--transition-normal), border-color var(--transition-normal), transform var(--transition-fast);
+    background: var(--bg-secondary) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: var(--radius-lg) !important;
+    transition: all var(--transition-normal);
+    overflow: hidden;
+    position: relative;
+}
+
+.action-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+}
+
+.action-card-tasks::before {
+    background: var(--color-secondary);
+}
+
+.action-card-diary::before {
+    background: var(--color-accent);
+}
+
+.action-card-focus::before {
+    background: var(--color-primary);
+}
+
+.action-card-meal::before {
+    background: var(--color-orange);
 }
 
 .action-card:hover {
-    background: #1a241e;
-    border-color: var(--border-hover);
-    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
-.action-card:active {
-    transform: translateY(0);
-    background: #151d18;
+.action-card:hover::before {
+    opacity: 1;
 }
 
-.action-card i {
-    font-size: 20px;
-    margin-bottom: 6px;
-    color: var(--accent);
+.action-card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: var(--space-lg) var(--space-md) !important;
 }
 
-.action-card small {
-    color: var(--muted);
-}
-
-.link-button {
-    background: none;
-    border: none;
-    color: var(--accent);
-    cursor: pointer;
-    font-size: 13px;
-    padding: var(--space-2) var(--space-3);
-    border-radius: var(--radius-sm);
-    transition: background var(--transition-normal), color var(--transition-normal);
-}
-
-.link-button:hover {
-    background: var(--accent-light);
-    color: var(--accent-hover);
-}
-
-.link-button:active {
-    background: rgba(34, 197, 94, 0.2);
-}
-
-.recent-card {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    gap: var(--space-3);
-    padding: var(--space-3) var(--space-3);
-    border-radius: var(--radius-lg);
-    background: #141d18;
-    border: 1px solid #1f2a23;
-    margin-bottom: var(--space-3);
-    transition: background var(--transition-normal), border-color var(--transition-normal);
-}
-
-.recent-card:hover {
-    background: #1a241e;
-    border-color: var(--border-hover);
-}
-
-.recent-icon {
-    width: 38px;
-    height: 38px;
-    display: grid;
-    place-items: center;
+.action-icon-wrapper {
+    width: 56px;
+    height: 56px;
     border-radius: var(--radius-md);
-    background: rgba(34, 197, 94, 0.15);
-    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--space-sm);
+    color: white;
+    transition: all var(--transition-normal);
+}
+
+.action-icon-tasks {
+    background: var(--color-secondary);
+    box-shadow: 0 4px 12px rgba(48, 209, 88, 0.25);
+}
+
+.action-icon-diary {
+    background: var(--color-accent);
+    box-shadow: 0 4px 12px rgba(10, 132, 255, 0.25);
+}
+
+.action-icon-focus {
+    background: var(--color-primary);
+    box-shadow: 0 4px 12px rgba(255, 45, 85, 0.25);
+}
+
+.action-icon-meal {
+    background: var(--color-orange);
+    box-shadow: 0 4px 12px rgba(255, 149, 0, 0.25);
+}
+
+.action-card:hover .action-icon-wrapper {
+    transform: scale(1.1);
+}
+
+.action-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.action-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.action-subtitle {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+/* ===== 最近成就卡片 ===== */
+.recent-card {
+    background: var(--bg-secondary) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: var(--radius-md) !important;
 }
 
 .recent-title {
@@ -593,15 +760,10 @@ body {
 }
 
 .recent-sub {
-    color: var(--muted);
     font-size: 12px;
 }
 
-.recent-time {
-    color: var(--muted);
-    font-size: 12px;
-}
-
+/* ===== 番茄鐘 ===== */
 .focus-panel {
     text-align: center;
 }
@@ -626,40 +788,19 @@ body {
     filter: drop-shadow(0 18px 24px rgba(0,0,0,0.35));
 }
 
-.tomato-shadow {
-    fill: rgba(0,0,0,0.25);
-}
-
-.tomato-body {
-    fill: url(#tomatoBody);
-}
-
-.tomato-deep {
-    fill: url(#tomatoDeep);
-}
-
-.tomato-leaf {
-    fill: url(#leafGrad);
-}
-
+.tomato-shadow { fill: rgba(0,0,0,0.25); }
+.tomato-body { fill: url(#tomatoBody); }
+.tomato-deep { fill: url(#tomatoDeep); }
+.tomato-leaf { fill: url(#leafGrad); }
 .tomato-stem {
     fill: none;
     stroke: #15803d;
     stroke-width: 10;
     stroke-linecap: round;
 }
-
-.tomato-top {
-    fill: rgba(0,0,0,0.18);
-}
-
-.tomato-highlight {
-    fill: rgba(255,255,255,0.22);
-}
-
-.tomato-highlight-2 {
-    fill: rgba(255,255,255,0.12);
-}
+.tomato-top { fill: rgba(0,0,0,0.18); }
+.tomato-highlight { fill: rgba(255,255,255,0.22); }
+.tomato-highlight-2 { fill: rgba(255,255,255,0.12); }
 
 .timer-text {
     font-size: 48px;
@@ -680,163 +821,165 @@ body {
     flex-wrap: wrap;
 }
 
+/* ===== 待辦清單 ===== */
 .todo-inputs {
-    display: grid;
-    gap: var(--space-3);
-    grid-template-columns: 1fr 220px 120px;
+    display: flex;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
 }
 
 .todo-filter {
     display: flex;
-    gap: var(--space-3);
+    gap: var(--space-sm);
     align-items: center;
     flex-wrap: wrap;
 }
 
-.todo-item,
-.diary-item,
-.meal-item {
-    padding: var(--space-3) var(--space-4);
-    border-radius: var(--radius-md);
-    background: #141d18;
-    border: 1px solid #1f2a23;
-    margin-bottom: var(--space-3);
-    transition: background var(--transition-normal), border-color var(--transition-normal);
-}
-
-.todo-item:hover,
-.diary-item:hover,
-.meal-item:hover {
-    background: #1a241e;
-    border-color: var(--border-hover);
-}
-
-.todo-row {
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
-}
-
-.todo-row .title {
-    flex: 1;
-}
-
-.todo-row.completed .title {
-    text-decoration: line-through;
-    color: #69748a;
-}
-
 .todo-date {
     font-size: 12px;
-    color: var(--muted);
-    margin-bottom: var(--space-2);
+    color: var(--text-secondary);
+    margin-top: var(--space-md);
+    margin-bottom: var(--space-xs);
 }
 
+.todo-item {
+    background: var(--bg-secondary) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: var(--radius-md) !important;
+}
+
+/* ===== AI 回覆框 ===== */
 .ai-box {
-    background: rgba(34, 197, 94, 0.08);
-    border: 1px solid rgba(34, 197, 94, 0.3);
-    border-radius: var(--radius-md);
-    padding: var(--space-3) var(--space-4);
-    color: #bff2d5;
-    line-height: 1.6;
+    background: rgba(10, 132, 255, 0.08) !important;
+    border: 1px solid rgba(10, 132, 255, 0.3) !important;
+    border-radius: var(--radius-md) !important;
 }
 
 .ai-reply-label {
     font-size: 12px;
     font-weight: 600;
-    color: var(--accent);
     margin-bottom: 8px;
+}
+
+/* ===== 飲食上傳 ===== */
+.meal-upload {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
 }
 
-.ai-reply-label::before {
-    content: "🤖";
-    font-size: 14px;
+/* ===== 底部導航 - iOS Tab Bar 風格 ===== */
+.bottom-nav {
+    background: rgba(28, 28, 30, 0.95) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid var(--border-color) !important;
+    padding-bottom: env(safe-area-inset-bottom, 0px) !important;
 }
 
-.muted { color: var(--muted); }
+.bottom-tabs {
+    height: 56px;
+}
 
-.auth-container {
-    min-height: 100vh;
+.bottom-tab {
+    padding: 0 !important;
+    min-width: 64px;
+}
+
+.tab-content {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: var(--space-6) var(--space-4);
-    background: radial-gradient(ellipse at 50% 0%, rgba(34, 197, 94, 0.15) 0%, transparent 50%);
+    gap: 2px;
+    padding: var(--space-xs) 0;
+    transition: all var(--transition-normal);
 }
 
-.auth-card {
-    width: 100%;
-    max-width: 400px;
-    background: var(--panel-2);
-    border-radius: var(--radius-2xl);
-    border: 1px solid rgba(34, 197, 94, 0.2);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 40px rgba(34, 197, 94, 0.1);
-    transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
-}
-
-.auth-card:hover {
-    border-color: rgba(34, 197, 94, 0.35);
-    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45), 0 0 50px rgba(34, 197, 94, 0.15);
-}
-
-.auth-card .p-card-title {
-    text-align: center;
-    font-size: 24px;
-    font-weight: 700;
-    color: var(--accent);
-    padding-top: var(--space-2);
-}
-
-.auth-card .p-card-content {
-    padding: var(--space-2) var(--space-6) var(--space-6);
-}
-
-.auth-card .p-inputtext,
-.auth-card .p-password input {
-    height: 48px;
-    font-size: 16px;
-}
-
-.auth-card .p-button {
-    height: 48px;
-    font-size: 16px;
-}
-
-.auth-logo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: var(--space-6);
-}
-
-.auth-logo-icon {
-    width: 64px;
-    height: 64px;
-    border-radius: var(--radius-2xl);
-    background: linear-gradient(135deg, var(--accent), #15803d);
+.tab-icon-wrapper {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-sm);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 28px;
-    color: white;
-    margin-bottom: var(--space-3);
-    box-shadow: 0 8px 24px rgba(34, 197, 94, 0.3);
-    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+    color: var(--text-tertiary);
+    transition: all var(--transition-normal);
 }
 
-.auth-logo-icon:hover {
-    transform: scale(1.05);
-    box-shadow: 0 12px 32px rgba(34, 197, 94, 0.4);
+.tab-icon-active {
+    background: var(--color-primary);
+    color: white !important;
+    box-shadow: 0 2px 8px rgba(255, 45, 85, 0.25);
+    transform: scale(1.1);
 }
 
-.auth-subtitle {
-    color: var(--muted);
-    font-size: 14px;
-    text-align: center;
+.tab-label {
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    transition: color var(--transition-normal);
+}
+
+.tab-active .tab-label {
+    color: var(--color-primary);
+}
+
+/* Tab 選中動畫 */
+.bottom-tab .q-tab__indicator {
+    display: none;
+}
+
+.bottom-tab:active .tab-content {
+    transform: scale(0.95);
+}
+
+/* ===== 響應式設計 ===== */
+@media (max-width: 1100px) {
+    .mobile-only {
+        display: flex !important;
+    }
+    
+    /* 行動版顯示底部導航 */
+    .bottom-nav {
+        display: block !important;
+    }
+}
+
+@media (min-width: 1101px) {
+    .mobile-only {
+        display: none !important;
+    }
+    
+    /* 桌面版隱藏底部導航 */
+    .bottom-nav {
+        display: none !important;
+    }
+    
+    /* 桌面版側邊欄始終顯示 */
+    .nav-drawer {
+        display: block !important;
+    }
+}
+
+@media (max-width: 720px) {
+    .todo-inputs {
+        flex-direction: column;
+    }
+    
+    .action-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .tomato-clock {
+        width: 200px;
+        height: 200px;
+    }
+    
+    .timer-text {
+        font-size: 42px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -844,19 +987,42 @@ body {
         padding: 16px;
     }
     
+    .auth-logo-icon {
+        width: 64px;
+        height: 64px;
+    }
+    
+    .auth-logo-icon .q-icon {
+        font-size: 36px !important;
+    }
+    
+    .auth-title {
+        font-size: 24px;
+    }
+    
     .auth-card {
-        border-radius: 20px;
+        max-width: 100%;
     }
     
-    .auth-card .p-card-content {
-        padding: 8px 16px 20px;
+    .auth-ring-1 {
+        width: 400px;
+        height: 400px;
+        top: -150px;
+        right: -150px;
     }
     
-    .auth-card .p-card-title {
-        font-size: 22px;
+    .auth-ring-2 {
+        width: 300px;
+        height: 300px;
+        bottom: -80px;
+        left: -80px;
     }
     
-    /* 超小螢幕番茄鐘優化 */
+    .auth-ring-3 {
+        width: 200px;
+        height: 200px;
+    }
+    
     .tomato-clock {
         width: 180px;
         height: 180px;
@@ -865,410 +1031,2121 @@ body {
     .timer-text {
         font-size: 36px;
     }
-    
-    .focus-actions {
-        flex-direction: column;
-        gap: 8px;
-    }
-    
-    .focus-actions .p-button {
-        width: 100%;
-    }
 }
 
-.meal-upload {
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
-    flex-wrap: wrap;
+/* ===== 觸控目標尺寸優化 ===== */
+.q-btn {
+    min-height: var(--touch-target-min);
 }
 
-.bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: #101812;
-    border-top: 1px solid #1f2a23;
-    display: none;
-    grid-template-columns: repeat(5, 1fr);
-    padding: var(--space-3) var(--space-2) var(--space-3);
-    /* 底部安全區域優化 - 避開手機底部安全區域 (需求 12.3) */
-    padding-bottom: calc(var(--space-3) + env(safe-area-inset-bottom, 0px));
-    padding-left: calc(var(--space-2) + env(safe-area-inset-left, 0px));
-    padding-right: calc(var(--space-2) + env(safe-area-inset-right, 0px));
-    gap: 6px;
-    z-index: 100;
+.q-field__native {
+    min-height: var(--touch-target-min);
 }
 
-.bottom-item {
-    background: none;
-    border: none;
-    color: var(--muted);
+.q-item {
+    min-height: var(--touch-target-min);
+}
+
+.q-tab {
+    min-height: var(--touch-target-min);
+}
+
+/* ===== 總覽頁面 - Apple Fitness 風格 ===== */
+.summary-section {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* 活動環容器 */
+.activity-rings-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--space-1);
-    font-size: 11px;
-    cursor: pointer;
-    padding: var(--space-2) var(--space-1);
-    border-radius: var(--radius-md);
+    padding: var(--space-lg) 0;
+}
+
+.rings-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--space-lg);
+}
+
+.ring-outer,
+.ring-middle,
+.ring-inner {
+    position: absolute;
+}
+
+.rings-center {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    z-index: 10;
+}
+
+.rings-center-value {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1;
+}
+
+.rings-center-label {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: var(--space-xs);
+}
+
+/* 活動環圖例 */
+.rings-legend {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-lg);
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: var(--radius-full);
+}
+
+.legend-dot-focus {
+    background: var(--color-primary);
+    box-shadow: 0 0 8px rgba(255, 45, 85, 0.4);
+}
+
+.legend-dot-task {
+    background: var(--color-secondary);
+    box-shadow: 0 0 8px rgba(48, 209, 88, 0.4);
+}
+
+.legend-dot-diary {
+    background: var(--color-accent);
+    box-shadow: 0 0 8px rgba(10, 132, 255, 0.4);
+}
+
+.legend-label {
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.legend-value {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* 數據摘要區塊 */
+.stats-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-sm);
+}
+
+.stat-card {
+    background: var(--bg-secondary) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: var(--radius-lg) !important;
     transition: all var(--transition-normal);
-    min-height: 44px;
 }
 
-.bottom-item.active {
-    color: var(--accent);
-    background: rgba(34, 197, 94, 0.1);
+.stat-card:hover {
+    border-color: var(--color-primary) !important;
+    transform: translateY(-2px);
 }
 
-.bottom-item:hover {
-    background: rgba(255, 255, 255, 0.05);
+.stat-card-content {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-md) !important;
 }
 
-.bottom-item:active {
-    background: rgba(255, 255, 255, 0.08);
-    transform: scale(0.95);
+.stat-info {
+    display: flex;
+    flex-direction: column;
 }
 
-.bottom-item i {
-    font-size: 20px;
+.stat-value {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.2;
 }
 
-.bottom-item span {
+.stat-label {
     font-size: 11px;
-    font-weight: 500;
-    white-space: nowrap;
+    color: var(--text-secondary);
+    margin-top: 2px;
 }
 
-@media (max-width: 1100px) {
-    .app-shell {
+/* 最近成就列表 - Apple Fitness 風格 */
+.recent-wins-list {
+    background: transparent !important;
+    padding: 0;
+}
+
+.recent-win-item {
+    background: var(--bg-secondary) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: var(--radius-md) !important;
+    margin-bottom: var(--space-sm);
+    transition: all var(--transition-normal);
+    padding: var(--space-sm) var(--space-md) !important;
+}
+
+.recent-win-item:hover {
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    transform: translateX(4px);
+}
+
+.win-icon-wrapper {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.win-icon-task {
+    background: var(--color-secondary);
+    box-shadow: 0 2px 8px rgba(48, 209, 88, 0.25);
+}
+
+.win-icon-diary {
+    background: var(--color-accent);
+    box-shadow: 0 2px 8px rgba(10, 132, 255, 0.25);
+}
+
+.win-icon-meal {
+    background: var(--color-orange);
+    box-shadow: 0 2px 8px rgba(255, 149, 0, 0.25);
+}
+
+.win-icon-focus {
+    background: var(--color-primary);
+    box-shadow: 0 2px 8px rgba(255, 45, 85, 0.25);
+}
+
+.win-icon-default {
+    background: var(--text-secondary);
+    box-shadow: 0 2px 8px rgba(142, 142, 147, 0.25);
+}
+
+.win-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary) !important;
+}
+
+.win-subtitle {
+    font-size: 12px;
+    color: var(--text-secondary) !important;
+    margin-top: 2px;
+}
+
+.win-time {
+    font-size: 11px;
+    color: var(--text-tertiary) !important;
+}
+
+/* 空狀態 */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-xl) var(--space-md);
+    text-align: center;
+}
+
+.empty-state-text {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-top: var(--space-sm);
+}
+
+/* 響應式調整 */
+@media (max-width: 600px) {
+    .stats-summary {
         grid-template-columns: 1fr;
     }
-    .sidebar {
-        display: none !important;
+    
+    .rings-legend {
+        flex-direction: column;
+        align-items: center;
+        gap: var(--space-sm);
     }
-    .bottom-nav {
-        display: grid;
-    }
-    .main {
-        padding: var(--space-6) var(--space-5) 120px;
-        /* 底部安全區域優化 - 確保內容不被底部導航遮擋 */
-        padding-bottom: calc(120px + env(safe-area-inset-bottom, 0px));
-        margin-left: 0;
+    
+    .rings-center-value {
+        font-size: 28px;
     }
 }
 
-/* 只在行動版顯示的元素 */
-.mobile-only {
-    display: none;
+
+/* ===== 番茄鐘頁面 - Apple Fitness 風格 ===== */
+.pomodoro-section {
+    max-width: 500px;
+    margin: 0 auto;
 }
 
-@media (max-width: 1100px) {
-    .mobile-only {
-        display: flex;
+.pomodoro-panel {
+    background: var(--bg-secondary) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: var(--radius-xl) !important;
+}
+
+.pomodoro-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--space-xl) var(--space-lg) !important;
+}
+
+.pomodoro-header {
+    text-align: center;
+    margin-bottom: var(--space-lg);
+}
+
+.pomodoro-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: var(--space-xs);
+}
+
+.pomodoro-subtitle {
+    font-size: 14px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.pomodoro-timer-wrapper {
+    margin-bottom: var(--space-xl);
+}
+
+/* 控制按鈕 */
+.pomodoro-controls {
+    display: flex;
+    gap: var(--space-md);
+    margin-bottom: var(--space-xl);
+}
+
+.pomodoro-btn {
+    min-width: 120px;
+    height: 48px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: var(--radius-md) !important;
+    transition: all var(--transition-normal);
+}
+
+.pomodoro-btn-start {
+    background: var(--color-primary) !important;
+    box-shadow: 0 4px 16px rgba(255, 45, 85, 0.25);
+}
+
+.pomodoro-btn-start:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 45, 85, 0.35);
+    background: #FF4466 !important;
+}
+
+.pomodoro-btn-pause {
+    background: var(--bg-tertiary) !important;
+}
+
+.pomodoro-btn-pause:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.pomodoro-btn-reset:hover {
+    background: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* 今日專注統計 */
+.pomodoro-stats {
+    display: flex;
+    gap: var(--space-xl);
+    padding: var(--space-md) var(--space-lg);
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-md);
+    width: 100%;
+    justify-content: center;
+}
+
+.pomodoro-stat {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.pomodoro-stat-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.pomodoro-stat-value {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.2;
+}
+
+.pomodoro-stat-label {
+    font-size: 11px;
+    color: var(--text-secondary);
+}
+
+/* 響應式調整 */
+@media (max-width: 480px) {
+    .pomodoro-controls {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .pomodoro-btn {
+        width: 100%;
+    }
+    
+    .pomodoro-stats {
+        flex-direction: column;
+        gap: var(--space-md);
+        align-items: center;
     }
 }
 
+
+/* ===== 待辦清單頁面 - Apple Fitness 風格 ===== */
+.todo-section {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* 新增任務區塊 */
+.todo-input-panel {
+    background: var(--bg-secondary) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: var(--radius-xl) !important;
+}
+
+.todo-input-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+}
+
+.todo-input-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.todo-input-form {
+    display: grid;
+    grid-template-columns: 1fr auto auto auto;
+    gap: var(--space-sm);
+    align-items: center;
+}
+
+.todo-task-input {
+    min-width: 200px;
+}
+
+.todo-date-input {
+    width: 160px;
+}
+
+.todo-priority-input {
+    width: 120px;
+}
+
+.todo-add-btn {
+    height: 40px;
+    border-radius: var(--radius-md) !important;
+}
+
+/* 篩選區塊 */
+.todo-filter-bar {
+    display: flex;
+    gap: var(--space-sm);
+    align-items: center;
+}
+
+.todo-filter-input {
+    flex: 1;
+    max-width: 200px;
+}
+
+.todo-clear-btn {
+    font-size: 13px;
+}
+
+/* 載入狀態 */
+.todo-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-xxl);
+    gap: var(--space-md);
+    color: var(--text-secondary);
+}
+
+/* 空狀態 */
+.todo-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-xxl);
+    text-align: center;
+}
+
+.todo-empty-text {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-top: var(--space-md);
+}
+
+.todo-empty-hint {
+    font-size: 13px;
+    color: var(--text-tertiary);
+    margin-top: var(--space-xs);
+}
+
+/* 任務分組 */
+.todo-groups {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.todo-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.todo-group-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-xs) 0;
+}
+
+.todo-group-date {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.todo-group-count {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    margin-left: auto;
+}
+
+.todo-group-items {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+/* 響應式調整 */
 @media (max-width: 720px) {
-    .todo-inputs {
+    .todo-input-form {
         grid-template-columns: 1fr;
     }
     
-    /* 快速操作卡片 2 欄顯示 */
-    .action-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: var(--space-3);
+    .todo-task-input,
+    .todo-date-input,
+    .todo-priority-input {
+        width: 100%;
     }
     
-    /* 待辦清單篩選區垂直堆疊 */
-    .todo-filter {
+    .todo-add-btn {
+        width: 100%;
+    }
+    
+    .todo-filter-bar {
         flex-direction: column;
         align-items: stretch;
     }
     
-    .todo-filter .p-calendar,
-    .todo-filter .p-button {
+    .todo-filter-input {
+        max-width: none;
+    }
+}
+
+
+/* ===== 日記頁面 - Apple Fitness 風格 ===== */
+.diary-section {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* 撰寫日記區塊 */
+.diary-input-panel {
+    background: var(--bg-secondary) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: var(--radius-xl) !important;
+}
+
+.diary-input-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+}
+
+.diary-input-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.diary-input-date {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    margin-left: auto;
+}
+
+.diary-textarea .q-field__control {
+    background: var(--bg-tertiary) !important;
+    border-radius: var(--radius-md) !important;
+}
+
+.diary-input-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: var(--space-md);
+}
+
+.diary-char-count {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: 12px;
+    color: var(--text-tertiary);
+}
+
+.diary-submit-btn {
+    border-radius: var(--radius-md) !important;
+    color: white !important;
+}
+
+/* 日記列表標題 */
+.diary-list-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.diary-list-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.diary-list-count {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    margin-left: auto;
+}
+
+/* 載入狀態 */
+.diary-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-xxl);
+    gap: var(--space-md);
+    color: var(--text-secondary);
+}
+
+/* 空狀態 */
+.diary-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-xxl);
+    text-align: center;
+}
+
+.diary-empty-text {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-top: var(--space-md);
+}
+
+.diary-empty-hint {
+    font-size: 13px;
+    color: var(--text-tertiary);
+    margin-top: var(--space-xs);
+}
+
+/* 日記卡片 */
+.diary-entries {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.diary-entry-card {
+    background: var(--bg-secondary) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: var(--radius-lg) !important;
+    transition: all var(--transition-normal);
+}
+
+.diary-entry-card:hover {
+    border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+.diary-entry-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-sm);
+}
+
+.diary-entry-date {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: 12px;
+    color: var(--text-tertiary);
+}
+
+.diary-entry-content {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--text-primary);
+    white-space: pre-wrap;
+}
+
+/* AI 回覆 - 漸層邊框 */
+.diary-ai-reply {
+    margin-top: var(--space-md);
+    padding: 2px;
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, var(--color-accent), var(--color-purple), var(--color-teal));
+    animation: gradient-shift 3s ease infinite;
+    background-size: 200% 200%;
+}
+
+@keyframes gradient-shift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.diary-ai-reply-inner {
+    background: var(--bg-tertiary);
+    border-radius: calc(var(--radius-md) - 2px);
+    padding: var(--space-md);
+}
+
+.diary-ai-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    margin-bottom: var(--space-sm);
+}
+
+.diary-ai-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.diary-ai-content {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+
+
+/* ===== 飲食分析頁面 - Apple Fitness 風格 ===== */
+.meal-section {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* 上傳區塊 */
+.meal-upload-panel {
+    background: var(--bg-secondary) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: var(--radius-xl) !important;
+}
+
+.meal-upload-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-lg);
+}
+
+.meal-upload-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.meal-upload-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: var(--space-lg);
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-lg);
+    border: 2px dashed var(--border-color);
+    transition: all var(--transition-normal);
+}
+
+.meal-upload-content:hover {
+    border-color: var(--color-warning);
+    background: rgba(255, 149, 0, 0.05);
+}
+
+.meal-upload-icon {
+    margin-bottom: var(--space-md);
+}
+
+.meal-upload-text {
+    margin-bottom: var(--space-lg);
+}
+
+.meal-upload-main {
+    font-size: 14px;
+    color: var(--text-primary);
+    margin-bottom: var(--space-xs);
+}
+
+.meal-upload-hint {
+    font-size: 12px;
+    color: var(--text-tertiary);
+}
+
+.meal-upload-btn {
+    border-radius: var(--radius-md) !important;
+    min-width: 160px;
+    color: #1a1a1a !important;
+}
+
+/* 今日營養摘要 */
+.meal-summary {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+}
+
+.meal-summary-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-md);
+    text-align: center;
+}
+
+.meal-summary-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-md);
+}
+
+.meal-summary-stat {
+    text-align: center;
+}
+
+.meal-summary-value {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.meal-summary-label {
+    font-size: 11px;
+    color: var(--text-tertiary);
+    margin-top: var(--space-xs);
+}
+
+/* 飲食記錄列表標題 */
+.meal-list-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.meal-list-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.meal-list-count {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    margin-left: auto;
+}
+
+/* 載入狀態 */
+.meal-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-xxl);
+    gap: var(--space-md);
+    color: var(--text-secondary);
+}
+
+/* 空狀態 */
+.meal-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-xxl);
+    text-align: center;
+}
+
+.meal-empty-text {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-top: var(--space-md);
+}
+
+.meal-empty-hint {
+    font-size: 13px;
+    color: var(--text-tertiary);
+    margin-top: var(--space-xs);
+}
+
+/* 飲食記錄卡片 */
+.meal-records {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.meal-record-card {
+    background: var(--bg-secondary) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: var(--radius-lg) !important;
+    transition: all var(--transition-normal);
+}
+
+.meal-record-card:hover {
+    border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+.meal-record-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-md);
+}
+
+.meal-record-date {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: 12px;
+    color: var(--text-tertiary);
+}
+
+/* 營養數據 */
+.meal-nutrients {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+    padding: var(--space-md);
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-md);
+}
+
+.meal-nutrient-calories {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    color: var(--color-warning);
+    padding-right: var(--space-lg);
+    border-right: 1px solid var(--border-color);
+}
+
+.meal-nutrient-value {
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.meal-nutrient-unit {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.meal-nutrient-details {
+    display: flex;
+    gap: var(--space-lg);
+    flex: 1;
+}
+
+.meal-nutrient-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.meal-nutrient-label {
+    font-size: 11px;
+    color: var(--text-tertiary);
+}
+
+.meal-nutrient-data {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* AI 分析摘要 */
+.meal-ai-summary {
+    padding: var(--space-md);
+    background: rgba(255, 149, 0, 0.08);
+    border-radius: var(--radius-md);
+    border-left: 3px solid var(--color-warning);
+}
+
+.meal-ai-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    margin-bottom: var(--space-sm);
+}
+
+.meal-ai-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-warning);
+}
+
+.meal-ai-content {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+
+/* 響應式調整 */
+@media (max-width: 600px) {
+    .meal-summary-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .meal-nutrients {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .meal-nutrient-calories {
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+        padding-right: 0;
+        padding-bottom: var(--space-md);
         width: 100%;
     }
     
-    /* 優化小螢幕內邊距 */
-    .main {
-        padding: var(--space-4) var(--space-4) 120px;
-        /* 底部安全區域優化 */
-        padding-bottom: calc(120px + env(safe-area-inset-bottom, 0px));
+    .meal-nutrient-details {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
+
+/* ===== 統計報告頁面 - Apple Fitness 風格 ===== */
+.statistics-section {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.statistics-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+}
+
+.statistics-title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.statistics-toggle {
+    border-radius: var(--radius-md) !important;
+    background: var(--bg-secondary) !important;
+}
+
+.statistics-toggle .q-btn {
+    border-radius: var(--radius-sm) !important;
+}
+
+.statistics-loading,
+.statistics-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-xxl) var(--space-md);
+    text-align: center;
+    gap: var(--space-md);
+}
+
+.statistics-empty-text {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.statistics-card {
+    background: var(--bg-secondary) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: var(--radius-lg) !important;
+}
+
+.statistics-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-md);
+}
+
+.statistics-card-title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.statistics-card-summary {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-xs);
+}
+
+.statistics-total {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.statistics-unit {
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.statistics-streak {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    margin-left: var(--space-sm);
+    padding: 2px 8px;
+    background: rgba(255, 149, 0, 0.15);
+    border-radius: var(--radius-full);
+    font-size: 11px;
+    color: var(--color-orange);
+}
+
+/* ===== 成就徽章頁面 - Apple Fitness 風格 ===== */
+.achievements-section {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.achievements-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+}
+
+.achievements-title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.achievements-count {
+    display: flex;
+    align-items: baseline;
+    gap: 2px;
+}
+
+.achievements-unlocked {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--color-warning);
+}
+
+.achievements-total {
+    font-size: 16px;
+    color: var(--text-secondary);
+}
+
+.achievements-filter {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.achievements-filter-toggle {
+    border-radius: var(--radius-md) !important;
+    background: var(--bg-secondary) !important;
+    flex-wrap: nowrap;
+}
+
+.achievements-filter-toggle .q-btn {
+    border-radius: var(--radius-sm) !important;
+    white-space: nowrap;
+}
+
+.achievements-loading,
+.achievements-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-xxl) var(--space-md);
+    text-align: center;
+    gap: var(--space-md);
+}
+
+.achievements-empty-text {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.achievements-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.achievement-item {
+    width: 100%;
+}
+
+/* ===== 目標設定頁面 - Apple Fitness 風格 ===== */
+.goals-section {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.goals-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.goals-title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.goals-add-panel {
+    background: var(--bg-secondary) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: var(--radius-xl) !important;
+}
+
+.goals-add-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.goals-add-form {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: var(--space-sm);
+    align-items: center;
+}
+
+.goals-type-select {
+    min-width: 200px;
+}
+
+.goals-value-input {
+    max-width: 120px;
+}
+
+.goals-loading,
+.goals-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-xxl) var(--space-md);
+    text-align: center;
+    gap: var(--space-md);
+}
+
+.goals-empty-text {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.goals-empty-hint {
+    font-size: 13px;
+    color: var(--text-tertiary);
+}
+
+.goals-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.goal-card {
+    background: var(--bg-secondary) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: var(--radius-lg) !important;
+    transition: all var(--transition-normal);
+}
+
+.goal-card:hover {
+    border-color: var(--color-secondary) !important;
+    transform: translateY(-2px);
+}
+
+.goal-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-md);
+}
+
+.goal-card-info {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+.goal-card-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.goal-card-label {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.goal-card-target {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 2px;
+}
+
+.goal-card-progress {
+    display: flex;
+    justify-content: center;
+    padding: var(--space-md) 0;
+}
+
+/* 響應式調整 */
+@media (max-width: 600px) {
+    .statistics-header,
+    .achievements-header {
+        flex-direction: column;
+        align-items: flex-start;
     }
     
-    .panel {
-        padding: var(--space-3);
-        border-radius: var(--radius-lg);
+    .goals-add-form {
+        grid-template-columns: 1fr;
     }
     
-    .hero-card {
-        padding: var(--space-4);
-        border-radius: var(--radius-lg);
+    .goals-type-select,
+    .goals-value-input {
+        max-width: none;
+        width: 100%;
+    }
+}
+
+
+/* ===== 日記頁面圖表 - Apple Fitness 風格 ===== */
+.diary-chart-panel {
+    background: var(--bg-secondary) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: var(--radius-lg) !important;
+}
+
+.diary-chart-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-md);
+}
+
+.diary-chart-title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.diary-chart-toggle {
+    border-radius: var(--radius-sm) !important;
+    background: var(--bg-tertiary) !important;
+}
+
+.diary-chart-toggle .q-btn {
+    border-radius: var(--radius-sm) !important;
+    font-size: 12px;
+    padding: 4px 12px;
+}
+
+.diary-chart-summary {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-xs);
+    margin-bottom: var(--space-md);
+}
+
+.diary-chart-count {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--color-accent);
+}
+
+.diary-chart-unit {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.diary-chart-streak {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    margin-left: var(--space-sm);
+    padding: 2px 8px;
+    background: rgba(255, 149, 0, 0.15);
+    border-radius: var(--radius-full);
+    font-size: 11px;
+    color: var(--color-orange);
+}
+
+
+/* ===== 飲食頁面圖表 - Apple Fitness 風格 ===== */
+.meal-chart-panel {
+    background: var(--bg-secondary) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: var(--radius-lg) !important;
+}
+
+.meal-chart-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-lg);
+}
+
+.meal-chart-title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.meal-chart-toggle {
+    border-radius: var(--radius-sm) !important;
+    background: var(--bg-tertiary) !important;
+}
+
+.meal-chart-toggle .q-btn {
+    border-radius: var(--radius-sm) !important;
+    font-size: 12px;
+    padding: 4px 12px;
+}
+
+.meal-chart-section {
+    margin-bottom: var(--space-md);
+}
+
+.meal-chart-section:last-child {
+    margin-bottom: 0;
+}
+
+.meal-chart-label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-sm);
+}
+
+.meal-chart-avg {
+    margin-left: auto;
+    font-size: 12px;
+    color: var(--text-tertiary);
+}
+
+.meal-chart-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+}
+
+.meal-chart-half {
+    margin-bottom: 0;
+}
+
+/* 響應式調整 */
+@media (max-width: 600px) {
+    .diary-chart-header,
+    .meal-chart-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-sm);
     }
     
-    /* 確保字體大小可讀（最小 14px） */
-    .greeting,
-    .header-date,
-    .muted,
-    .recent-sub,
-    .recent-time,
-    .todo-date,
-    .ai-author {
-        font-size: 14px;
+    .meal-chart-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* ===== 響應式設計與觸控優化 - Task 18 ===== */
+
+/* ===== 18.1 行動版佈局優化 ===== */
+@media (max-width: 1100px) {
+    /* 確保底部導航正確顯示 */
+    .bottom-nav {
+        display: block !important;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 2000;
     }
     
-    .bottom-item span {
+    /* 為底部導航預留空間 */
+    .q-page-container {
+        padding-bottom: calc(56px + env(safe-area-inset-bottom, 0px)) !important;
+    }
+    
+    /* 行動版頁面內邊距調整 */
+    .q-page {
+        padding: var(--space-sm) !important;
+    }
+    
+    /* 行動版標題調整 */
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-xs);
+    }
+    
+    /* 行動版活動環尺寸調整 */
+    .rings-wrapper {
+        transform: scale(0.85);
+    }
+    
+    /* 行動版統計卡片調整 */
+    .stats-summary {
+        grid-template-columns: 1fr;
+        gap: var(--space-sm);
+    }
+    
+    .stat-card-content {
+        padding: var(--space-sm) var(--space-md) !important;
+    }
+    
+    /* 行動版快速操作卡片 */
+    .action-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-sm);
+    }
+    
+    .action-card-content {
+        padding: var(--space-md) var(--space-sm) !important;
+    }
+    
+    .action-icon-wrapper {
+        width: 48px;
+        height: 48px;
+    }
+    
+    /* 行動版番茄鐘調整 */
+    .pomodoro-section {
+        padding: 0 var(--space-sm);
+    }
+    
+    .pomodoro-content {
+        padding: var(--space-lg) var(--space-md) !important;
+    }
+    
+    .pomodoro-controls {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .pomodoro-btn {
+        width: 100%;
+    }
+    
+    /* 行動版待辦清單調整 */
+    .todo-section {
+        padding: 0;
+    }
+    
+    .todo-input-form {
+        grid-template-columns: 1fr;
+        gap: var(--space-sm);
+    }
+    
+    .todo-task-input,
+    .todo-date-input,
+    .todo-priority-input {
+        width: 100%;
+        min-width: unset;
+    }
+    
+    .todo-add-btn {
+        width: 100%;
+        margin-top: var(--space-xs);
+    }
+    
+    /* 行動版日記調整 */
+    .diary-section {
+        padding: 0;
+    }
+    
+    .diary-input-header {
+        flex-wrap: wrap;
+    }
+    
+    .diary-input-date {
+        width: 100%;
+        margin-left: 0;
+        margin-top: var(--space-xs);
+    }
+    
+    /* 行動版飲食頁面調整 */
+    .meal-section {
+        padding: 0;
+    }
+    
+    .meal-summary-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    /* 行動版統計頁面調整 */
+    .statistics-section {
+        padding: 0;
+    }
+    
+    .statistics-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    /* 行動版成就頁面調整 */
+    .achievements-section {
+        padding: 0;
+    }
+    
+    .achievements-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    /* 行動版目標頁面調整 */
+    .goals-section {
+        padding: 0;
+    }
+    
+    .goals-add-form {
+        grid-template-columns: 1fr;
+    }
+    
+    .goals-type-select,
+    .goals-value-input {
+        max-width: none;
+        width: 100%;
+    }
+}
+
+/* 小螢幕額外優化 (手機) */
+@media (max-width: 480px) {
+    /* 更小的內邊距 */
+    .q-page {
+        padding: var(--space-xs) !important;
+    }
+    
+    /* 活動環進一步縮小 */
+    .rings-wrapper {
+        transform: scale(0.7);
+    }
+    
+    .rings-center-value {
+        font-size: 24px;
+    }
+    
+    .rings-center-label {
+        font-size: 11px;
+    }
+    
+    /* 圖例垂直排列 */
+    .rings-legend {
+        flex-direction: column;
+        align-items: center;
+        gap: var(--space-sm);
+    }
+    
+    /* 快速操作卡片文字縮小 */
+    .action-title {
+        font-size: 13px;
+    }
+    
+    .action-subtitle {
+        font-size: 11px;
+    }
+    
+    /* 番茄鐘標題縮小 */
+    .pomodoro-title {
+        font-size: 20px;
+    }
+    
+    /* 統計數據縮小 */
+    .stat-value {
+        font-size: 16px;
+    }
+    
+    .stat-label {
         font-size: 10px;
     }
     
-    .action-card {
-        padding: var(--space-3);
-        border-radius: var(--radius-lg);
+    /* 底部導航標籤縮小 */
+    .tab-label {
+        font-size: 9px;
     }
     
-    .action-card small {
-        font-size: 12px;
+    .tab-icon-wrapper {
+        width: 28px;
+        height: 28px;
     }
     
-    .section-head {
-        font-size: 15px;
-    }
-    
-    /* ===== 番茄鐘手機優化 (需求 12.4) ===== */
-    
-    /* 番茄鐘容器在手機上的優化 */
-    .focus-panel {
-        padding: var(--space-5) var(--space-4);
-    }
-    
-    /* 番茄鐘標題在手機上的優化 */
-    .focus-panel .section-title {
-        font-size: 20px;
-        margin-bottom: var(--space-4);
-    }
-    
-    /* 番茄鐘計時器在手機上保持清晰可見 */
-    .tomato-clock {
-        width: 200px;
-        height: 200px;
-        margin: 0 auto var(--space-5);
-    }
-    
-    /* 計時器文字在手機上的優化 - 確保清晰可見 */
-    .timer-text {
-        font-size: 42px;
-        font-weight: 800;
-    }
-    
-    /* 番茄鐘控制按鈕在手機上的優化 */
-    .focus-actions {
-        gap: var(--space-3);
-    }
-    
-    .focus-actions .p-button {
-        min-width: 90px;
-        padding: var(--space-3) var(--space-4);
-        font-size: 14px;
+    .tab-icon-wrapper .q-icon {
+        font-size: 20px !important;
     }
 }
 
-/* 平板版內邊距優化 (720px - 1100px) */
-@media (min-width: 721px) and (max-width: 1100px) {
-    .main {
-        padding: var(--space-6) var(--space-6) 120px;
-    }
-    
-    .action-grid {
-        grid-template-columns: repeat(4, 1fr);
-    }
-}
-
-/* 大螢幕優化 (>1100px) */
+/* ===== 18.2 桌面版佈局優化 ===== */
 @media (min-width: 1101px) {
+    /* 確保側邊欄正確顯示 */
+    .nav-drawer {
+        display: block !important;
+    }
+    
+    /* 隱藏底部導航 */
+    .bottom-nav {
+        display: none !important;
+    }
+    
+    /* 桌面版頁面內邊距 */
+    .q-page {
+        padding: var(--space-lg) var(--space-xl) !important;
+    }
+    
+    /* 桌面版最大寬度限制 */
+    .summary-section,
+    .pomodoro-section,
+    .todo-section,
+    .diary-section,
+    .meal-section,
+    .statistics-section,
+    .achievements-section,
+    .goals-section {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+    
+    /* 桌面版統計卡片橫向排列 */
+    .stats-summary {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    /* 桌面版快速操作卡片 */
     .action-grid {
         grid-template-columns: repeat(4, 1fr);
     }
+    
+    /* 桌面版待辦清單輸入 */
+    .todo-input-form {
+        grid-template-columns: 1fr 160px 120px auto;
+    }
+    
+    /* 桌面版目標設定 */
+    .goals-add-form {
+        grid-template-columns: 1fr auto auto;
+    }
+    
+    /* 桌面版飲食營養數據 */
+    .meal-nutrients {
+        flex-direction: row;
+    }
+    
+    .meal-nutrient-calories {
+        border-right: 1px solid var(--border-color);
+        border-bottom: none;
+        padding-right: var(--space-lg);
+        padding-bottom: 0;
+    }
+    
+    /* 桌面版圖表並排 */
+    .meal-chart-row {
+        grid-template-columns: 1fr 1fr;
+    }
 }
 
-/* ===== 行動裝置觸控優化 ===== */
-
-/* 觸控目標尺寸優化 - 按鈕最小高度 44px (需求 12.1) */
-.p-button {
-    min-height: 44px;
+/* 大螢幕優化 */
+@media (min-width: 1400px) {
+    /* 更大的最大寬度 */
+    .summary-section,
+    .statistics-section {
+        max-width: 1100px;
+    }
+    
+    /* 更大的活動環 */
+    .rings-wrapper {
+        transform: scale(1.1);
+    }
+    
+    /* 更大的統計卡片 */
+    .stat-value {
+        font-size: 22px;
+    }
 }
 
-/* 觸控目標尺寸優化 - 輸入框最小高度 44px (需求 12.2) */
-.p-inputtext,
-.p-password input,
-.p-textarea,
-.p-calendar input {
-    min-height: 44px;
+/* ===== 18.3 觸控目標尺寸優化 ===== */
+/* 確保所有可互動元素至少 44x44 像素 */
+
+/* 按鈕最小尺寸 */
+.q-btn {
+    min-height: var(--touch-target-min);
+    min-width: var(--touch-target-min);
 }
 
-/* 選單按鈕觸控優化 */
-.menu-button {
-    min-height: 44px;
+.q-btn--round {
+    min-width: var(--touch-target-min);
+    min-height: var(--touch-target-min);
 }
 
-/* 底部導航項目觸控優化 */
-.bottom-item {
-    min-height: 44px;
-    min-width: 44px;
+.q-btn--dense {
+    min-height: 36px;
+    min-width: 36px;
 }
 
-/* 動作卡片觸控優化 */
+/* 輸入框最小高度 */
+.q-field__native,
+.q-field__control {
+    min-height: var(--touch-target-min);
+}
+
+.q-field--dense .q-field__native,
+.q-field--dense .q-field__control {
+    min-height: 40px;
+}
+
+/* 列表項目最小高度 */
+.q-item {
+    min-height: var(--touch-target-min);
+}
+
+.q-item--dense {
+    min-height: 40px;
+}
+
+/* Tab 最小尺寸 */
+.q-tab {
+    min-height: var(--touch-target-min);
+    min-width: var(--touch-target-min);
+}
+
+/* 底部導航 Tab */
+.bottom-tab {
+    min-height: 56px;
+    min-width: 56px;
+}
+
+/* 核取方塊和切換開關 */
+.q-checkbox__inner,
+.q-toggle__inner {
+    min-width: var(--touch-target-min);
+    min-height: var(--touch-target-min);
+}
+
+/* 圖示按鈕 */
+.q-btn--flat.q-btn--round {
+    min-width: var(--touch-target-min);
+    min-height: var(--touch-target-min);
+}
+
+/* 導航項目 */
+.nav-item {
+    min-height: 48px;
+    padding: var(--space-sm) var(--space-md);
+}
+
+/* 任務卡片觸控區域 */
+.task-card {
+    min-height: var(--touch-target-min);
+}
+
+/* 成就徽章觸控區域 */
+.achievement-badge {
+    min-height: var(--touch-target-min);
+}
+
+/* 快速操作卡片觸控區域 */
 .action-card {
-    min-height: 44px;
+    min-height: 80px;
 }
 
-/* 連結按鈕觸控優化 */
-.link-button {
-    min-height: 44px;
-    padding: 10px 12px;
+/* 最近成就項目觸控區域 */
+.recent-win-item {
+    min-height: var(--touch-target-min);
 }
 
-/* 側邊欄登出按鈕觸控優化 */
-.sidebar-logout {
-    min-height: 44px;
+/* 日記卡片刪除按鈕 */
+.diary-entry-header .q-btn {
+    min-width: var(--touch-target-min);
+    min-height: var(--touch-target-min);
 }
 
-/* 頁首登出按鈕觸控優化 */
-.header-logout {
-    min-height: 44px;
+/* 飲食記錄刪除按鈕 */
+.meal-record-header .q-btn {
+    min-width: var(--touch-target-min);
+    min-height: var(--touch-target-min);
 }
 
-/* Checkbox 觸控區域優化 */
-.todo-row input[type="checkbox"] {
-    width: 24px;
-    height: 24px;
-    min-width: 24px;
-    cursor: pointer;
+/* 目標卡片刪除按鈕 */
+.goal-card-header .q-btn {
+    min-width: var(--touch-target-min);
+    min-height: var(--touch-target-min);
 }
 
-/* 行動裝置專屬觸控優化 */
+/* 篩選切換按鈕 */
+.q-btn-toggle .q-btn {
+    min-height: 36px;
+    min-width: 48px;
+}
+
+/* 登入頁面按鈕 */
+.auth-btn {
+    min-height: 48px;
+}
+
+/* 番茄鐘控制按鈕 */
+.pomodoro-btn {
+    min-height: 48px;
+    min-width: 120px;
+}
+
+/* 待辦清單新增按鈕 */
+.todo-add-btn {
+    min-height: var(--touch-target-min);
+}
+
+/* 日記提交按鈕 */
+.diary-submit-btn {
+    min-height: var(--touch-target-min);
+}
+
+/* 飲食上傳按鈕 */
+.meal-upload-btn {
+    min-height: var(--touch-target-min);
+}
+
+/* ===== 18.5 安全區域支援 ===== */
+/* 支援 iPhone X 及以上的瀏海和底部安全區域 */
+
+/* 底部導航安全區域 */
+.bottom-nav {
+    padding-bottom: env(safe-area-inset-bottom, 0px) !important;
+}
+
+/* 頁面容器安全區域 */
+.q-page-container {
+    padding-left: env(safe-area-inset-left, 0px);
+    padding-right: env(safe-area-inset-right, 0px);
+}
+
+/* 登入頁面安全區域 */
+.auth-container {
+    padding-top: calc(var(--space-lg) + env(safe-area-inset-top, 0px));
+    padding-bottom: calc(var(--space-lg) + env(safe-area-inset-bottom, 0px));
+    padding-left: calc(var(--space-md) + env(safe-area-inset-left, 0px));
+    padding-right: calc(var(--space-md) + env(safe-area-inset-right, 0px));
+}
+
+/* 側邊欄安全區域 */
+.nav-drawer .drawer-content {
+    padding-top: calc(var(--space-md) + env(safe-area-inset-top, 0px));
+    padding-bottom: calc(var(--space-md) + env(safe-area-inset-bottom, 0px));
+}
+
+/* 頁面頂部安全區域 */
+.q-page {
+    padding-top: calc(var(--space-md) + env(safe-area-inset-top, 0px)) !important;
+}
+
+/* 行動版頁面底部安全區域 (為底部導航預留空間) */
 @media (max-width: 1100px) {
-    /* 確保所有按鈕在行動裝置上有足夠的觸控區域 */
-    .p-button {
-        min-height: 44px;
-        padding: 12px 16px;
+    .q-page {
+        padding-bottom: calc(var(--space-md) + 56px + env(safe-area-inset-bottom, 0px)) !important;
+    }
+}
+
+/* 橫向模式安全區域 */
+@media (orientation: landscape) {
+    .auth-container {
+        padding-left: calc(var(--space-lg) + env(safe-area-inset-left, 0px));
+        padding-right: calc(var(--space-lg) + env(safe-area-inset-right, 0px));
     }
     
-    /* 輸入框在行動裝置上的觸控優化 */
-    .p-inputtext,
-    .p-password input,
-    .p-textarea,
-    .p-calendar input {
-        min-height: 44px;
-        padding: 12px 14px;
+    .nav-drawer .drawer-content {
+        padding-left: calc(var(--space-md) + env(safe-area-inset-left, 0px));
     }
     
-    /* 圖示按鈕觸控優化 */
-    .icon-button.p-button {
-        min-width: 44px;
-        min-height: 44px;
+    .q-page {
+        padding-left: calc(var(--space-md) + env(safe-area-inset-left, 0px)) !important;
+        padding-right: calc(var(--space-md) + env(safe-area-inset-right, 0px)) !important;
+    }
+}
+
+/* iOS 特定優化 */
+@supports (-webkit-touch-callout: none) {
+    /* iOS Safari 底部安全區域 */
+    .bottom-nav {
+        padding-bottom: max(env(safe-area-inset-bottom, 0px), 20px) !important;
     }
     
-    /* 刪除按鈕觸控優化 */
-    .p-button.p-button-text {
-        min-width: 44px;
-        min-height: 44px;
+    /* iOS Safari 頂部安全區域 */
+    .q-page {
+        padding-top: max(calc(var(--space-md) + env(safe-area-inset-top, 0px)), var(--space-lg)) !important;
     }
 }
 
-
-/* ConfirmDialog 自訂樣式 */
-.p-dialog {
-    background: var(--panel-2);
-    border: 1px solid var(--accent-border);
-    border-radius: var(--radius-xl);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(34, 197, 94, 0.1);
+/* 觸控回饋優化 */
+@media (hover: none) and (pointer: coarse) {
+    /* 觸控設備上增加點擊區域 */
+    .q-btn--flat.q-btn--round {
+        padding: var(--space-sm);
+    }
+    
+    /* 觸控設備上的卡片點擊效果 */
+    .action-card:active,
+    .task-card:active,
+    .recent-win-item:active {
+        transform: scale(0.98);
+        opacity: 0.9;
+    }
+    
+    /* 觸控設備上禁用 hover 效果 */
+    .action-card:hover {
+        transform: none;
+        box-shadow: none;
+    }
+    
+    .action-card:active {
+        transform: scale(0.98);
+    }
 }
 
-.p-dialog .p-dialog-header {
-    background: transparent;
-    border-bottom: 1px solid var(--border);
-    padding: var(--space-4) var(--space-5);
-    color: var(--text);
+/* 高對比度模式支援 */
+@media (prefers-contrast: high) {
+    :root {
+        --border-color: #666666;
+    }
+    
+    .q-card {
+        border-width: 2px !important;
+    }
+    
+    .q-btn {
+        border-width: 2px !important;
+    }
 }
 
-.p-dialog .p-dialog-header .p-dialog-title {
-    font-weight: 600;
-    font-size: 16px;
+/* 減少動畫模式支援 */
+@media (prefers-reduced-motion: reduce) {
+    .auth-ring {
+        animation: none !important;
+    }
+    
+    .auth-logo-icon {
+        animation: none !important;
+    }
 }
 
-.p-dialog .p-dialog-header .p-dialog-header-icon {
-    color: var(--muted);
-    width: 32px;
-    height: 32px;
-    border-radius: var(--radius-sm);
-    transition: background var(--transition-normal), color var(--transition-normal);
-}
-
-.p-dialog .p-dialog-header .p-dialog-header-icon:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: var(--text);
-}
-
-.p-dialog .p-dialog-content {
-    background: transparent;
-    padding: var(--space-5);
-    color: var(--text);
-}
-
-.p-dialog .p-dialog-footer {
-    background: transparent;
-    border-top: 1px solid var(--border);
-    padding: var(--space-4) var(--space-5);
-    gap: var(--space-3);
-}
-
-.p-confirm-dialog .p-confirm-dialog-icon {
-    color: #fbbf24;
-    font-size: 24px;
-}
-
-.p-confirm-dialog .p-confirm-dialog-message {
-    color: var(--text);
-    margin-left: var(--space-3);
-}
-
-/* 確認按鈕 - 使用主色調綠色 */
-.p-dialog .p-dialog-footer .p-button {
-    min-width: 80px;
-}
-
-.p-dialog .p-dialog-footer .p-confirm-dialog-accept {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: #03130c;
-}
-
-.p-dialog .p-dialog-footer .p-confirm-dialog-accept:hover {
-    background: var(--accent-hover);
-    border-color: var(--accent-hover);
-}
-
-.p-dialog .p-dialog-footer .p-confirm-dialog-accept:active {
-    background: var(--accent-active);
-    border-color: var(--accent-active);
-}
-
-/* 取消按鈕 - 次要樣式 */
-.p-dialog .p-dialog-footer .p-confirm-dialog-reject {
-    background: transparent;
-    border: 1px solid var(--border-hover);
-    color: var(--muted);
-}
-
-.p-dialog .p-dialog-footer .p-confirm-dialog-reject:hover {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: #3d5244;
-    color: var(--text);
-}
-
-.p-dialog .p-dialog-footer .p-confirm-dialog-reject:active {
-    background: rgba(255, 255, 255, 0.08);
+/* 確保 Quasar spinner 動畫正常運作 */
+.q-spinner,
+.q-spinner svg,
+.q-spinner circle,
+.q-spinner-dots,
+.q-spinner-dots circle {
+    animation-duration: 1.4s !important;
+    animation-iteration-count: infinite !important;
 }

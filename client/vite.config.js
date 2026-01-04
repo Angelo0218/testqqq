@@ -1,10 +1,17 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import { VitePWA } from 'vite-plugin-pwa';
+import { quasar, transformAssetUrls } from '@quasar/vite-plugin';
+import { fileURLToPath, URL } from 'node:url';
 
 export default defineConfig({
   plugins: [
-    vue(),
+    vue({
+      template: { transformAssetUrls }
+    }),
+    quasar({
+      sassVariables: fileURLToPath(new URL('./src/styles/quasar-variables.scss', import.meta.url))
+    }),
     VitePWA({
       registerType: 'autoUpdate',
       manifest: {
@@ -12,8 +19,8 @@ export default defineConfig({
         short_name: 'Dream',
         start_url: '/',
         display: 'standalone',
-        background_color: '#0c1511',
-        theme_color: '#16a34a',
+        background_color: '#000000',
+        theme_color: '#FF2D55',
         icons: [
           {
             src: '/pwa-icon.svg',

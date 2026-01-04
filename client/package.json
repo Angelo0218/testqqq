@@ -5,16 +5,26 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest --run",
+    "test:watch": "vitest"
   },
   "dependencies": {
-    "primeicons": "^7.0.0",
-    "primevue": "^3.53.0",
-    "vue": "^3.4.38"
+    "@quasar/extras": "^1.17.0",
+    "chart.js": "^4.5.1",
+    "quasar": "^2.18.6",
+    "vue": "^3.4.38",
+    "vue-chartjs": "^5.3.3"
   },
   "devDependencies": {
+    "@quasar/vite-plugin": "^1.9.0",
     "@vitejs/plugin-vue": "^5.2.0",
+    "@vue/test-utils": "^2.4.6",
+    "fast-check": "^3.23.2",
+    "happy-dom": "^15.11.7",
+    "sass": "^1.83.0",
     "vite": "^5.4.10",
-    "vite-plugin-pwa": "^0.21.1"
+    "vite-plugin-pwa": "^0.21.1",
+    "vitest": "^2.1.8"
   }
 }

@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import db from '../db/index.js';
 import { generateDiaryResponse } from '../services/ai.js';
+import { checkAchievementsByCategory } from '../services/achievements.js';
 
 const router = Router();
 
@@ -39,11 +40,15 @@ router.post('/', async (req, res) => {
     [userId, content.trim(), aiResponse, date]
   );
   
+  // Check diary achievements after saving
+  const newAchievements = await checkAchievementsByCategory(userId, 'diary');
+  
   res.status(201).json({ 
     id: result.rows[0].id,
     content: content.trim(),
     aiResponse,
-    date
+    date,
+    newAchievements
   });
 });
 

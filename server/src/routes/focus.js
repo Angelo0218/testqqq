@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import db from '../db/index.js';
+import { checkAchievementsByCategory } from '../services/achievements.js';
 
 const router = Router();
 
@@ -19,9 +20,13 @@ router.post('/', async (req, res) => {
   
   const user = await db.get('SELECT focus_time FROM users WHERE id = $1', [userId]);
   
+  // Check focus achievements after adding focus time
+  const newAchievements = await checkAchievementsByCategory(userId, 'focus');
+  
   res.json({ 
     message: '已記錄專注時間',
-    totalFocusTime: user.focus_time
+    totalFocusTime: user.focus_time,
+    newAchievements
   });
 });
 

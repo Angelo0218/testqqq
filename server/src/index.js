@@ -13,6 +13,9 @@ import diaryRoutes from './routes/diary.js';
 import mealRoutes from './routes/meal.js';
 import focusRoutes from './routes/focus.js';
 import summaryRoutes from './routes/summary.js';
+import goalsRoutes from './routes/goals.js';
+import achievementsRoutes from './routes/achievements.js';
+import statisticsRoutes from './routes/statistics.js';
 import { requireAuth } from './middleware/auth.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -59,6 +62,9 @@ app.use('/api/diaries', requireAuth, diaryRoutes);
 app.use('/api/meals', requireAuth, mealRoutes);
 app.use('/api/focus', requireAuth, focusRoutes);
 app.use('/api/summary', requireAuth, summaryRoutes);
+app.use('/api/goals', requireAuth, goalsRoutes);
+app.use('/api/achievements', requireAuth, achievementsRoutes);
+app.use('/api/statistics', requireAuth, statisticsRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {
