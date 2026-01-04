@@ -1,5 +1,15 @@
 <template>
   <q-layout view="lHh Lpr lFf" class="bg-dark">
+    <!-- SVG 漸層定義 -->
+    <svg width="0" height="0" style="position: absolute;">
+      <defs>
+        <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#FF2D55" />
+          <stop offset="100%" stop-color="#FF9500" />
+        </linearGradient>
+      </defs>
+    </svg>
+    
     <!-- 登入頁面 - Apple Fitness 風格 -->
     <div v-if="!authed" class="auth-container">
       <!-- 背景裝飾環 -->
@@ -177,76 +187,62 @@
 
       <!-- 主內容區 -->
       <q-page-container>
-        <!-- 手機版登出按鈕 - 固定右上角 -->
-        <q-btn
-          flat
-          round
-          icon="logout"
-          class="mobile-logout-btn mobile-only"
-          @click="logout"
-        >
-          <q-tooltip>{{ UI_TEXT.auth.logout }}</q-tooltip>
-        </q-btn>
-        
         <q-page class="q-pa-md">
           <!-- 頁首 -->
           <header class="header q-mb-lg">
-            <div>
+            <div class="header-left">
               <div class="greeting">{{ getGreeting() }}，{{ userName || '探險家' }}</div>
               <div class="header-date">{{ formatDateChinese(new Date()) }}</div>
             </div>
+            <q-btn
+              flat
+              round
+              icon="logout"
+              size="sm"
+              class="header-logout-btn mobile-only"
+              @click="logout"
+            >
+              <q-tooltip>{{ UI_TEXT.auth.logout }}</q-tooltip>
+            </q-btn>
           </header>
 
-          <!-- 總覽頁面 - Apple Fitness 風格 -->
+          <!-- 總覽頁面 -->
           <section v-if="activeSection === 'summary'" class="summary-section">
-            <!-- 活動環中心區域 -->
-            <div class="activity-rings-container q-mb-lg">
-              <div class="rings-wrapper">
-                <!-- 三層活動環 -->
-                <ActivityRing
-                  :progress="focusProgress"
-                  :color="{ start: '#FF2D55', end: '#FF9500' }"
-                  :size="ringSize"
-                  :stroke-width="ringStrokeWidth"
-                  class="ring-outer"
-                />
-                <ActivityRing
-                  :progress="taskProgress"
-                  :color="{ start: '#30D158', end: '#64D2FF' }"
-                  :size="ringSize - ringGap"
-                  :stroke-width="ringStrokeWidth"
-                  class="ring-middle"
-                />
-                <ActivityRing
-                  :progress="diaryProgress"
-                  :color="{ start: '#0A84FF', end: '#BF5AF2' }"
-                  :size="ringSize - ringGap * 2"
-                  :stroke-width="ringStrokeWidth"
-                  class="ring-inner"
-                />
-                <!-- 中心數據 -->
-                <div class="rings-center">
-                  <div class="rings-center-value">{{ summaryStats.todoRate }}%</div>
-                  <div class="rings-center-label">今日進度</div>
+            <!-- 簡化的進度顯示 -->
+            <div class="progress-overview q-mb-lg">
+              <div class="progress-main">
+                <div class="progress-circle">
+                  <svg viewBox="0 0 100 100" class="progress-svg">
+                    <circle cx="50" cy="50" r="45" class="progress-bg" />
+                    <circle 
+                      cx="50" cy="50" r="45" 
+                      class="progress-bar"
+                      :style="{ strokeDashoffset: 283 - (283 * summaryStats.todoRate / 100) }"
+                    />
+                  </svg>
+                  <div class="progress-text">
+                    <span class="progress-value">{{ summaryStats.todoRate }}%</span>
+                    <span class="progress-label">今日進度</span>
+                  </div>
                 </div>
               </div>
               
-              <!-- 活動環圖例 -->
-              <div class="rings-legend">
-                <div class="legend-item">
-                  <span class="legend-dot legend-dot-focus"></span>
-                  <span class="legend-label">專注時間</span>
-                  <span class="legend-value">{{ formatFocusMinutes(summaryStats.focusMinutes) }}</span>
+              <!-- 數據列表 -->
+              <div class="progress-stats">
+                <div class="progress-stat-item">
+                  <span class="stat-dot stat-dot-focus"></span>
+                  <span class="stat-name">專注時間</span>
+                  <span class="stat-data">{{ formatFocusMinutes(summaryStats.focusMinutes) }}</span>
                 </div>
-                <div class="legend-item">
-                  <span class="legend-dot legend-dot-task"></span>
-                  <span class="legend-label">任務完成</span>
-                  <span class="legend-value">{{ summaryStats.completedTodos }}/{{ summaryStats.totalTodos }}</span>
+                <div class="progress-stat-item">
+                  <span class="stat-dot stat-dot-task"></span>
+                  <span class="stat-name">任務完成</span>
+                  <span class="stat-data">{{ summaryStats.completedTodos }}/{{ summaryStats.totalTodos }}</span>
                 </div>
-                <div class="legend-item">
-                  <span class="legend-dot legend-dot-diary"></span>
-                  <span class="legend-label">日記天數</span>
-                  <span class="legend-value">{{ summaryStats.diaryCount }} 天</span>
+                <div class="progress-stat-item">
+                  <span class="stat-dot stat-dot-diary"></span>
+                  <span class="stat-name">日記天數</span>
+                  <span class="stat-data">{{ summaryStats.diaryCount }} 天</span>
                 </div>
               </div>
             </div>
