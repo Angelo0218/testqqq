@@ -48,61 +48,65 @@ if (usePostgres) {
     }
   };
 } else {
-  // SQLite for local development
-  const Database = (await import('better-sqlite3')).default;
-  const dbPath = join(__dirname, '../data/dream-tracker.db');
-  
-  const sqlite = new Database(dbPath);
-  sqlite.pragma('journal_mode = WAL');
+  // SQLite for local development (only loaded when not in production)
+  try {
+    const Database = (await import('better-sqlite3')).default;
+    const dbPath = join(__dirname, '../data/dream-tracker.db');
+    
+    const sqlite = new Database(dbPath);
+    sqlite.pragma('journal_mode = WAL');
 
-  const initSchema = () => {
-    try {
-      const schemaPath = join(__dirname, 'schema-sqlite.sql');
-      if (existsSync(schemaPath)) {
-        const schema = readFileSync(schemaPath, 'utf-8');
-        sqlite.exec(schema);
-        console.log('✅ SQLite schema initialized');
+    const initSchema = () => {
+      try {
+        const schemaPath = join(__dirname, 'schema-sqlite.sql');
+        if (existsSync(schemaPath)) {
+          const schema = readFileSync(schemaPath, 'utf-8');
+          sqlite.exec(schema);
+          console.log('✅ SQLite schema initialized');
+        }
+      } catch (error) {
+        console.error('❌ Schema initialization error:', error.message);
       }
-    } catch (error) {
-      console.error('❌ Schema initialization error:', error.message);
-    }
-  };
+    };
 
-  initSchema();
+    initSchema();
 
-  // 轉換 PostgreSQL 風格的 $1, $2 參數為 SQLite 的 ?
-  const convertParams = (text) => {
-    let index = 0;
-    return text.replace(/\$\d+/g, () => '?');
-  };
+    // 轉換 PostgreSQL 風格的 $1, $2 參數為 SQLite 的 ?
+    const convertParams = (text) => {
+      return text.replace(/\$\d+/g, () => '?');
+    };
 
-  db = {
-    async get(text, params = []) {
-      return sqlite.prepare(convertParams(text)).get(...params);
-    },
-    async all(text, params = []) {
-      return sqlite.prepare(convertParams(text)).all(...params);
-    },
-    async run(text, params = []) {
-      // 移除 RETURNING 子句（SQLite 不支援）
-      const cleanText = text.replace(/\s+RETURNING\s+\w+/gi, '');
-      const result = sqlite.prepare(convertParams(cleanText)).run(...params);
-      // 模擬 PostgreSQL 的 RETURNING 行為
-      return { 
-        rowCount: result.changes, 
-        rows: [{ id: result.lastInsertRowid }],
-        lastInsertRowid: result.lastInsertRowid 
-      };
-    },
-    async query(text, params = []) {
-      const stmt = sqlite.prepare(convertParams(text));
-      if (text.trim().toUpperCase().startsWith('SELECT')) {
-        return { rows: stmt.all(...params) };
+    db = {
+      async get(text, params = []) {
+        return sqlite.prepare(convertParams(text)).get(...params);
+      },
+      async all(text, params = []) {
+        return sqlite.prepare(convertParams(text)).all(...params);
+      },
+      async run(text, params = []) {
+        // 移除 RETURNING 子句（SQLite 不支援）
+        const cleanText = text.replace(/\s+RETURNING\s+\w+/gi, '');
+        const result = sqlite.prepare(convertParams(cleanText)).run(...params);
+        // 模擬 PostgreSQL 的 RETURNING 行為
+        return { 
+          rowCount: result.changes, 
+          rows: [{ id: result.lastInsertRowid }],
+          lastInsertRowid: result.lastInsertRowid 
+        };
+      },
+      async query(text, params = []) {
+        const stmt = sqlite.prepare(convertParams(text));
+        if (text.trim().toUpperCase().startsWith('SELECT')) {
+          return { rows: stmt.all(...params) };
+        }
+        const result = stmt.run(...params);
+        return { rows: [], rowCount: result.changes };
       }
-      const result = stmt.run(...params);
-      return { rows: [], rowCount: result.changes };
-    }
-  };
+    };
+  } catch (error) {
+    console.error('❌ SQLite not available, please set DATABASE_URL for PostgreSQL');
+    process.exit(1);
+  }
 }
 
 export default db;
