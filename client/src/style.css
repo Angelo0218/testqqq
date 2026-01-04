@@ -3149,3 +3149,252 @@ body {
     animation-duration: 1.4s !important;
     animation-iteration-count: infinite !important;
 }
+
+/* ===== 手機版觸控優化 ===== */
+
+/* 手機版登出按鈕優化 */
+.mobile-logout-btn {
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+    min-height: 48px !important;
+    background: rgba(255, 45, 85, 0.15) !important;
+    border: 1px solid rgba(255, 45, 85, 0.3) !important;
+    border-radius: var(--radius-md) !important;
+    color: var(--color-primary) !important;
+    transition: all var(--transition-normal);
+}
+
+.mobile-logout-btn:hover,
+.mobile-logout-btn:active {
+    background: rgba(255, 45, 85, 0.25) !important;
+    transform: scale(0.95);
+}
+
+.mobile-logout-btn .q-icon {
+    font-size: 24px !important;
+}
+
+/* 底部導航優化 - 增大觸控區域 */
+@media (max-width: 1100px) {
+    .bottom-nav {
+        padding-bottom: max(env(safe-area-inset-bottom, 8px), 8px) !important;
+    }
+    
+    .bottom-tabs {
+        height: 64px !important;
+    }
+    
+    .bottom-tab {
+        min-width: 56px !important;
+        min-height: 64px !important;
+        padding: 8px 4px !important;
+    }
+    
+    .tab-content {
+        padding: 8px 0 !important;
+        gap: 4px !important;
+    }
+    
+    .tab-icon-wrapper {
+        width: 36px !important;
+        height: 36px !important;
+    }
+    
+    .tab-icon-wrapper .q-icon {
+        font-size: 22px !important;
+    }
+    
+    .tab-label {
+        font-size: 11px !important;
+        font-weight: 600 !important;
+    }
+    
+    /* 頁面內容底部留白，避免被 navbar 遮擋 */
+    .q-page {
+        padding-bottom: 80px !important;
+    }
+}
+
+/* 手機版 header 優化 */
+@media (max-width: 1100px) {
+    .header {
+        padding: var(--space-sm) 0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: var(--bg-primary);
+    }
+    
+    .greeting {
+        font-size: 16px !important;
+        font-weight: 600;
+        color: var(--text-primary);
+    }
+    
+    .header-date {
+        font-size: 14px !important;
+    }
+}
+
+/* 手機版表單輸入優化 */
+@media (max-width: 720px) {
+    /* 待辦清單輸入區優化 */
+    .todo-input-form {
+        flex-direction: column !important;
+        gap: var(--space-md) !important;
+    }
+    
+    .todo-task-input,
+    .todo-date-input,
+    .todo-priority-input {
+        width: 100% !important;
+    }
+    
+    .todo-add-btn {
+        width: 100% !important;
+        height: 52px !important;
+        font-size: 16px !important;
+    }
+    
+    /* 日記輸入區優化 */
+    .diary-textarea .q-field__control {
+        min-height: 150px !important;
+    }
+    
+    .diary-submit-btn {
+        width: 100% !important;
+        height: 52px !important;
+        font-size: 16px !important;
+    }
+    
+    /* 篩選區優化 */
+    .todo-filter-bar {
+        flex-direction: column !important;
+        gap: var(--space-sm) !important;
+    }
+    
+    .todo-filter-input {
+        width: 100% !important;
+    }
+    
+    .todo-clear-btn {
+        width: 100% !important;
+    }
+}
+
+/* 手機版卡片觸控優化 */
+@media (max-width: 720px) {
+    .action-card {
+        min-height: 100px !important;
+    }
+    
+    .action-card-content {
+        padding: var(--space-md) !important;
+    }
+    
+    .action-icon-wrapper {
+        width: 48px !important;
+        height: 48px !important;
+    }
+    
+    .action-title {
+        font-size: 14px !important;
+    }
+    
+    /* 任務卡片觸控區域 */
+    .task-card {
+        min-height: 60px !important;
+        padding: var(--space-md) !important;
+    }
+    
+    /* 統計卡片優化 */
+    .stat-card-content {
+        padding: var(--space-md) var(--space-sm) !important;
+        flex-direction: column !important;
+        text-align: center !important;
+        gap: var(--space-xs) !important;
+    }
+    
+    .stat-value {
+        font-size: 20px !important;
+    }
+    
+    .stat-label {
+        font-size: 10px !important;
+    }
+}
+
+/* 手機版番茄鐘優化 */
+@media (max-width: 480px) {
+    .pomodoro-controls {
+        flex-direction: column !important;
+        width: 100% !important;
+        gap: var(--space-sm) !important;
+    }
+    
+    .pomodoro-btn {
+        width: 100% !important;
+        height: 52px !important;
+        font-size: 16px !important;
+    }
+    
+    .pomodoro-stats {
+        flex-direction: column !important;
+        gap: var(--space-md) !important;
+    }
+}
+
+/* 手機版活動環尺寸調整 */
+@media (max-width: 480px) {
+    .rings-center-value {
+        font-size: 24px !important;
+    }
+    
+    .rings-center-label {
+        font-size: 11px !important;
+    }
+    
+    .legend-item {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 2px !important;
+    }
+    
+    .legend-label {
+        font-size: 11px !important;
+    }
+    
+    .legend-value {
+        font-size: 12px !important;
+    }
+}
+
+/* 確保所有可點擊元素有足夠的觸控區域 */
+@media (pointer: coarse) {
+    .q-btn:not(.q-btn--fab):not(.q-btn--fab-mini) {
+        min-height: 44px !important;
+        min-width: 44px !important;
+    }
+    
+    .q-item {
+        min-height: 52px !important;
+    }
+    
+    .q-tab {
+        min-height: 52px !important;
+    }
+    
+    .q-checkbox,
+    .q-radio {
+        min-height: 44px !important;
+        min-width: 44px !important;
+    }
+    
+    /* 增加點擊區域的視覺反饋 */
+    .q-btn:active,
+    .q-item:active,
+    .q-tab:active {
+        opacity: 0.8;
+    }
+}

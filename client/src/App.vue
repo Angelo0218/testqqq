@@ -187,9 +187,12 @@
               flat
               round
               icon="logout"
-              class="mobile-only"
+              size="lg"
+              class="mobile-logout-btn mobile-only"
               @click="logout"
-            />
+            >
+              <q-tooltip>{{ UI_TEXT.auth.logout }}</q-tooltip>
+            </q-btn>
           </header>
 
           <!-- 總覽頁面 - Apple Fitness 風格 -->
