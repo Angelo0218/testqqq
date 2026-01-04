@@ -1141,6 +1141,15 @@
                       :stroke-width="8"
                       :label="`${getGoalProgress(goal)}%`"
                     />
+                    <div class="goal-card-stats">
+                      <div class="goal-current-value">
+                        <span class="goal-current-number">{{ getGoalCurrentValue(goal.type) }}</span>
+                        <span class="goal-current-unit">{{ getGoalUnit(goal.type) }}</span>
+                      </div>
+                      <div class="goal-status" :class="{ 'goal-completed': getGoalProgress(goal) >= 100 }">
+                        {{ getGoalProgress(goal) >= 100 ? '已達成 ✓' : '進行中' }}
+                      </div>
+                    </div>
                   </div>
                 </q-card-section>
               </q-card>
@@ -2307,6 +2316,20 @@ function getGoalUnit(type) {
 function getGoalProgress(goal) {
   // 從 goalProgressMap 取得進度，如果沒有則回傳 0
   return goalProgressMap.value[goal.id] || 0;
+}
+
+function getGoalCurrentValue(type) {
+  // 根據目標類型取得當前完成值
+  switch (type) {
+    case 'focus':
+      return summaryStats.value.focusMinutes || 0;
+    case 'task':
+      return summaryStats.value.completedTodos || 0;
+    case 'calories':
+      return summaryStats.value.todayCalories || 0;
+    default:
+      return 0;
+  }
 }
 
 async function refreshAll() {

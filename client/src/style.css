@@ -2417,11 +2417,59 @@ body {
 .goal-card-progress {
     display: flex;
     justify-content: center;
+    align-items: center;
+    gap: var(--space-lg);
     padding: var(--space-md) 0;
+}
+
+.goal-card-stats {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-xs);
+}
+
+.goal-current-value {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+}
+
+.goal-current-number {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.goal-current-unit {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.goal-status {
+    font-size: 13px;
+    color: var(--text-secondary);
+    padding: 4px 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-full);
+}
+
+.goal-status.goal-completed {
+    color: var(--color-secondary);
+    background: rgba(48, 209, 88, 0.15);
 }
 
 /* 響應式調整 */
 @media (max-width: 600px) {
+    .goal-card-progress {
+        flex-direction: column;
+        gap: var(--space-md);
+    }
+    
+    .goal-card-stats {
+        align-items: center;
+    }
+    
     .statistics-header,
     .achievements-header {
         flex-direction: column;
